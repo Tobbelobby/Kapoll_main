@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PollDaoImp extends MainImplementation {
+public class PollDAO extends MainImplementation {
 
 
 
-    public static final String PERSISTENCE_UNIT_NAME = "experiment-2";
+    public static final String PERSISTENCE_UNIT_NAME = "Kapoller_db";
 
     EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     EntityManager em = factory.createEntityManager();

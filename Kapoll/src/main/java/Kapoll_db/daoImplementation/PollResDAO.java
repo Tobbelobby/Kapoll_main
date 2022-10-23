@@ -5,11 +5,10 @@ import Kapoll_db.tables.Poll_result;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class PollResDao extends MainImplementation {
+public class PollResDAO extends MainImplementation {
 
-    public static final String PERSISTENCE_UNIT_NAME = "experiment-2";
+    public static final String PERSISTENCE_UNIT_NAME = "Kapoller_db";
 
 
     EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);

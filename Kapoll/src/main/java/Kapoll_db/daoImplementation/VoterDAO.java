@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class VoterDaoImp extends MainImplementation {
+public class VoterDAO extends MainImplementation {
 
-    public static final String PERSISTENCE_UNIT_NAME = "experiment-2";
+    public static final String PERSISTENCE_UNIT_NAME = "Kapoller_db";
 
     List<Voters> voterList = new ArrayList<>();
     EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);

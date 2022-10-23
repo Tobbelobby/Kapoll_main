@@ -6,11 +6,11 @@ import javax.persistence.*;
 
 public abstract class MainImplementation<K> implements KapDao<K> {
 
-    public static final String PERSISTENCE_UNIT_NAME = "experiment-2";
+    public static final String PERSISTENCE_UNIT_NAME = "Kapoller_db";
 
 
-    EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-    EntityManager em = factory.createEntityManager();
+    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+    EntityManager em = entityManagerFactory.createEntityManager();
     EntityTransaction emt = em.getTransaction();
 
 
@@ -20,7 +20,7 @@ public abstract class MainImplementation<K> implements KapDao<K> {
         em.merge(k);
         emt.commit();
         em.close();
-        factory.close();
+        entityManagerFactory.close();
     }
 
     @Override
@@ -29,7 +29,7 @@ public abstract class MainImplementation<K> implements KapDao<K> {
         em.persist(k);
         emt.commit();
         em.close();
-        factory.close();
+        entityManagerFactory.close();
     }
 
 
@@ -41,7 +41,7 @@ public abstract class MainImplementation<K> implements KapDao<K> {
         em.remove(em.merge(k));
         emt.commit();
         em.close();
-        factory.close();
+        entityManagerFactory.close();
         removeFromList(k);
 
 

@@ -1,19 +1,23 @@
 package Kapoll_db.daoImplementation;
 
 import Kapoll_db.tables.Kapoller;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Configuration
+public class KapollerDAO extends MainImplementation {
 
-public class KapollerDAOimp extends MainImplementation {
-
-    public static final String PERSISTENCE_UNIT_NAME = "experiment-2";
+    public static final String PERSISTENCE_UNIT_NAME = "Kapoller_db";
 
 
-    EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-    EntityManager em = factory.createEntityManager();
+    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+
+    @PersistenceContext
+    EntityManager em = entityManagerFactory.createEntityManager();
     EntityTransaction emt = em.getTransaction();
 
     List<Kapoller> mainlist = new ArrayList<>();
