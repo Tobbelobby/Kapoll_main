@@ -1,8 +1,11 @@
 package com.example.Kapoll;
 
 
-import Kapoll_db.daoImplementation.*;
-import Kapoll_db.tables.Kapoller;
+import com.example.Kapoll.Kapoll_db.daoImplementation.KapollerDAO;
+import com.example.Kapoll.Kapoll_db.daoImplementation.PollDAO;
+import com.example.Kapoll.Kapoll_db.daoImplementation.PollResDAO;
+import com.example.Kapoll.Kapoll_db.daoImplementation.VoterDAO;
+import com.example.Kapoll.Kapoll_db.tables.Kapoller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -4,10 +4,10 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="Kapoller_db" transaction-type="RESOURCE_LOCAL">
 
-        <class>Kapoll_db.tables.Kapoller</class>
-        <class>Kapoll_db.tables.Poll</class>
-        <class>Kapoll_db.tables.Poll_result</class>
-        <class>Kapoll_db.tables.Voters</class>
+        <class>com.example.Kapoll.Kapoll_db.tables.Kapoller</class>
+        <class>com.example.Kapoll.Kapoll_db.tables.Poll</class>
+        <class>com.example.Kapoll.Kapoll_db.tables.Poll_result</class>
+        <class>com.example.Kapoll.Kapoll_db.tables.Voters</class>
 
 
         <properties>
@@ -17,7 +17,7 @@
             <property name="javax.persistence.jdbc.user" value="test"/>
             <property name="javax.persistence.jdbc.password" value="test"/>
 
-            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
             <!--  Or <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/> -->
             <property name="eclipselink.ddl-generation.output-mode" value="database"/> <!-- value = "both" enables DDL logging -->
         </properties>
