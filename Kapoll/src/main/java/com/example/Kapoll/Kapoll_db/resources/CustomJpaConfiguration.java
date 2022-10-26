@@ -1,4 +1,4 @@
-package com.example.Kapoll;
+package com.example.Kapoll.Kapoll_db.resources;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import org.eclipse.persistence.config.BatchWriting;
@@ -24,12 +24,11 @@ import org.springframework.transaction.jta.JtaTransactionManager;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
-@EnableTransactionManagement
-@EnableJpaRepositories("com.example.Kapoll.Kapoll_db.tables")
-public class CustomJpaConfiguration extends JpaBaseConfiguration {
+//@Configuration
+//@EnableTransactionManagement
+//public class CustomJpaConfiguration extends JpaBaseConfiguration {
 
-    protected CustomJpaConfiguration(DataSource dataSource, JpaProperties properties,
+  /*  protected CustomJpaConfiguration(DataSource dataSource, JpaProperties properties,
                                      ObjectProvider<JtaTransactionManager> jtaTransactionManager) {
         super(dataSource, properties, jtaTransactionManager);
     }
@@ -84,5 +83,5 @@ public class CustomJpaConfiguration extends JpaBaseConfiguration {
         ret.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_ONLY);
         ret.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_DATABASE_GENERATION);
         return ret;
-    }
-}
+    }*/
+//}
