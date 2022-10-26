@@ -1,6 +1,7 @@
 package com.example.Kapoll.Kapoll_db.tables;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -25,11 +26,11 @@ public class Poll {
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pollid")
+    @JsonManagedReference
     private Set<Poll_result> poll_results;
 
     @OneToOne
     private Voters vote;
-
 
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}

@@ -1,6 +1,8 @@
 package com.example.Kapoll.Kapoll_db.tables;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,18 +19,21 @@ public class Poll_result {
     private int noVote;
     private int yesVote;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pollid")
+    @JsonBackReference
     private Poll pollid;
 
+    public Poll getPollid(){return pollid;}
 
+    public void setPollid(Poll pollid) {
+        this.pollid = pollid;
+    }
 
     public Long getId() {
         return id;
     }
     public void setId(Long id) {this.id = id;}
-
-
 
     public int getNoVote() {
         return noVote;

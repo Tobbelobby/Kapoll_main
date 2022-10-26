@@ -40,6 +40,7 @@ public class Main {
         poll.setVote(vote);
 
         Poll_result poll_result = new Poll_result();
+        poll_result.setPollid(poll);
         poll_result.setUtilDate(new Date());
         poll_result.setYesVote(vote.getVote());
         Set<Poll_result> pollResultSet = new HashSet<>();
