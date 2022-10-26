@@ -12,18 +12,11 @@ import java.util.List;
 public class KapollerDAO extends MainImplementation{
     public static final String PERSISTENCE_UNIT_NAME = "Kapoller_db";
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-    @PersistenceContext
     EntityManager em = entityManagerFactory.createEntityManager();
     EntityTransaction emt = em.getTransaction();
-
     List<Kapoller> mainlist = new ArrayList<>();
 
-    @Override
-    public List<Kapoller> getAll() {
-        Query query = em.createQuery("SELECT e FROM Kapoller e");
-        mainlist = query.getResultList();
-        return mainlist;
-    }
+
 
     @Override
     public void removeFromList(Object o) {
@@ -32,18 +25,15 @@ public class KapollerDAO extends MainImplementation{
 
 
     @Override
-    public boolean exist(Long id) {
-        if (!(get(id) == (null))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    @Override
     public Kapoller get(Long id) {
         return (em.find(Kapoller.class, id));
+    }
+
+    @Override
+    public List<Kapoller> getAll() {
+        Query query = em.createQuery("SELECT e FROM Kapoller e");
+        mainlist = query.getResultList();
+        return mainlist;
     }
 
 
@@ -85,6 +75,15 @@ public class KapollerDAO extends MainImplementation{
         }
 
 
+
+    }
+    @Override
+    public boolean exist(Long id) {
+        if (!(get(id) == (null))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
