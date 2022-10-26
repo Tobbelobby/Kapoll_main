@@ -74,6 +74,7 @@ public class CustomJpaConfiguration extends JpaBaseConfiguration {
         return jpaProperties;
     }
 
+
     private static Map<String, ?> initJpaProperties() {
         final Map<String, Object> ret = new HashMap<>();
         // Add any JpaProperty you are interested in and is supported by your Database and JPA implementation
