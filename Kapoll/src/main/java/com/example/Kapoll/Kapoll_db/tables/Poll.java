@@ -1,5 +1,7 @@
 package com.example.Kapoll.Kapoll_db.tables;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -16,8 +18,9 @@ public class Poll {
     private int time;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "owner")
+    @JsonBackReference
     private Kapoller owner;
 
 

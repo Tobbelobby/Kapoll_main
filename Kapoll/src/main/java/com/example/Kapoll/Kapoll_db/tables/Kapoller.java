@@ -1,5 +1,7 @@
 package com.example.Kapoll.Kapoll_db.tables;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -18,6 +20,7 @@ public class Kapoller {
     private String password;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    @JsonManagedReference
     private Set<Poll> poll;
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}

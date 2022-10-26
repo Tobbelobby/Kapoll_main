@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/Kapoll/src/main/java/com/example/Kapoll/Kapoll_db/resources/Kapoll.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/Kapoll/src/main/resources/schema-h2.sql" dialect="Derby" />
   </component>
 </project>
