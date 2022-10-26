@@ -2,13 +2,14 @@ package com.example.Kapoll.Kapoll_db.daoImplementation;
 
 import com.example.Kapoll.Kapoll_db.tables.Kapoller;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class KapollerDAO extends MainImplementation {
+public class KapollerDAO extends MainImplementation{
     public static final String PERSISTENCE_UNIT_NAME = "Kapoller_db";
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     @PersistenceContext
