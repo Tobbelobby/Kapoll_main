@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
 public class KapollerDAO extends MainImplementation {
     public static final String PERSISTENCE_UNIT_NAME = "Kapoller_db";
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);

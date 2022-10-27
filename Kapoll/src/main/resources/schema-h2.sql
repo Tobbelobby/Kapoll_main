@@ -1,2 +1,0 @@
-CREATE SCHEMA KAPOLLER
-CREATE SCHEMA IF not exists testdb

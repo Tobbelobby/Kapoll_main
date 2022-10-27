@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 public class Controller {
 
-    @Autowired
     private KapollerDAO kapollerDAO = new KapollerDAO();
     private PollDAO pollDAO = new PollDAO();
     private PollResDAO pollResDAO = new PollResDAO();
@@ -24,6 +23,14 @@ public class Controller {
 
     @GetMapping("/Kapoller")
     List<Kapoller> GetAllKapollers(){
+        // Just save something so we get something in return.
+        Kapoller user1 = new Kapoller();
+        user1.setFirstName("Winnie");
+        user1.setLastName("The Pooh");
+        user1.setUserName("The mighty bear");
+        user1.setPassword("Honey123");
+
+        kapollerDAO.save(user1);
 
         return kapollerDAO.getAll();
 
