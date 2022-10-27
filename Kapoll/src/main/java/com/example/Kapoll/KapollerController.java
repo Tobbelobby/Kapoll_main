@@ -2,27 +2,22 @@ package com.example.Kapoll;
 
 
 import com.example.Kapoll.Kapoll_db.daoImplementation.KapollerDAO;
-import com.example.Kapoll.Kapoll_db.daoImplementation.PollDAO;
-import com.example.Kapoll.Kapoll_db.daoImplementation.PollResDAO;
-import com.example.Kapoll.Kapoll_db.daoImplementation.VoterDAO;
 import com.example.Kapoll.Kapoll_db.tables.Kapoller;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-public class Controller {
+public class KapollerController {
 
-    private KapollerDAO kapollerDAO = new KapollerDAO();
-    private PollDAO pollDAO = new PollDAO();
-    private PollResDAO pollResDAO = new PollResDAO();
-    private VoterDAO voterDAO = new VoterDAO();
-    public Controller(){}
+    private final KapollerDAO kapollerDAO = new KapollerDAO();
+
+    public KapollerController() {
+    }
 
     @GetMapping("/Kapoller")
-    List<Kapoller> GetAllKapollers(){
+    List<Kapoller> getAllKapollers() {
         // Just save something so we get something in return.
         Kapoller user1 = new Kapoller();
         user1.setFirstName("Winnie");
@@ -35,19 +30,6 @@ public class Controller {
         return kapollerDAO.getAll();
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

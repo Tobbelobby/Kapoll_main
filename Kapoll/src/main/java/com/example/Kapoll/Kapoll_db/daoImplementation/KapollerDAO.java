@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KapollerDAO extends MainImplementation {
+public class KapollerDAO extends MainImplementation<Kapoller> {
     public static final String PERSISTENCE_UNIT_NAME = "Kapoller_db";
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     @PersistenceContext
@@ -24,18 +24,14 @@ public class KapollerDAO extends MainImplementation {
     }
 
     @Override
-    public void removeFromList(Object o) {
-        mainlist.remove(o);
+    public void removeFromList(Kapoller kapoller) {
+        mainlist.remove(kapoller);
     }
 
 
     @Override
     public boolean exist(Long id) {
-        if (!(get(id) == (null))) {
-            return true;
-        } else {
-            return false;
-        }
+        return get(id) != (null);
     }
 
 
