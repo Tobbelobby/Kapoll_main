@@ -2,7 +2,6 @@ package com.example.Kapoll.Kapoll_db.daoImplementation;
 
 import com.example.Kapoll.Kapoll_db.tables.Kapoller;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -51,8 +50,8 @@ public class KapollerDAO extends MainImplementation{
                 updatedKapoller.setUserName(kapoller.getUserName());
             }
 
-            if (kapoller.getPoll() != null) {
-                updatedKapoller.setPoll(kapoller.getPoll());
+            if (kapoller.getPolls() != null) {
+                updatedKapoller.setPolls(kapoller.getPolls());
             }
             mainlist.add(updatedKapoller);
             save(updatedKapoller);
