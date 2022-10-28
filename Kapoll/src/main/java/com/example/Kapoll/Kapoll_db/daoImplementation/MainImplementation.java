@@ -13,14 +13,21 @@ public abstract class MainImplementation<K> implements KapDao<K> {
     EntityManager em = entityManagerFactory.createEntityManager();
     EntityTransaction emt = em.getTransaction();
 
+    public MainImplementation(EntityManagerFactory entityManagerFactory, EntityManager em) {
+        this.entityManagerFactory = entityManagerFactory;
+        this.em = em;
+    }
+
+    public MainImplementation() {
+
+    }
 
     @Override
     public void save(K k){
         emt.begin();
         em.merge(k);
         emt.commit();
-        em.close();
-        entityManagerFactory.close();
+
     }
 
     @Override
@@ -28,8 +35,6 @@ public abstract class MainImplementation<K> implements KapDao<K> {
         emt.begin();
         em.persist(k);
         emt.commit();
-        em.close();
-        entityManagerFactory.close();
     }
 
 
@@ -40,10 +45,14 @@ public abstract class MainImplementation<K> implements KapDao<K> {
         emt.begin();
         em.remove(em.merge(k));
         emt.commit();
-        em.close();
-        entityManagerFactory.close();
         removeFromList(k);
 
 
+    }
+
+    @Override
+    public void close() {
+        em.close();
+        entityManagerFactory.close();
     }
 }

@@ -20,6 +20,14 @@ public class PollDAO extends MainImplementation {
 
     List<Poll> polls = new ArrayList<>();
 
+    public PollDAO(EntityManagerFactory entityManagerFactory, EntityManager em) {
+        super(entityManagerFactory, em);
+    }
+
+    public PollDAO() {
+
+    }
+
     @Override
     public Poll get(Long id) {
         return em.find(Poll.class, id);

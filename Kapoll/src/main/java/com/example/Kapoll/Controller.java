@@ -23,6 +23,12 @@ public class Controller {
     private PollResDAO pollResDAO = new PollResDAO();
     private VoterDAO voterDAO = new VoterDAO();
 
+    public static boolean isNumeric(String str) {
+        return str != null && str.matches("[-+]?\\d*\\.?\\d+");
+    }
+    public static Long convertStringToLong(String toBeConverted) {
+        return Long.parseLong(toBeConverted);
+    }
     //public Controller(){}
 
     //////////////////////// KAPOLLER
@@ -32,7 +38,8 @@ public class Controller {
     }
 
     @GetMapping("/api/Kapoller/{id}")
-    Kapoller GetKapoller(@PathVariable Long id){ return kapollerDAO.get(id);}
+    Kapoller GetKapoller(@PathVariable Long id){
+        return kapollerDAO.get(id);}
 
     //FIX! test
     @PutMapping("/api/Kapoller/{id}")

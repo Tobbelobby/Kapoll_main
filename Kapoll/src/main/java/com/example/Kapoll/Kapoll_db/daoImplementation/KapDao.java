@@ -20,6 +20,8 @@ public interface KapDao<T> {
 
     boolean exist(Long id);
 
+    void close();
+
 
 
 }

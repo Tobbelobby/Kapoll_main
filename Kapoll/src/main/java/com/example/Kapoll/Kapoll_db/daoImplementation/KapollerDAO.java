@@ -11,14 +11,18 @@ import java.util.List;
 @Configuration
 public class KapollerDAO extends MainImplementation{
     public static final String PERSISTENCE_UNIT_NAME = "Kapoller_db";
-    List<Kapoller> mainlist = new ArrayList<>();
+    List<Kapoller> mainlist = new ArrayList<>();/*
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     EntityManager em = entityManagerFactory.createEntityManager();
-    EntityTransaction emt = em.getTransaction();
+    EntityTransaction emt = em.getTransaction();*/
 
+    public KapollerDAO(EntityManagerFactory entityManagerFactory, EntityManager em) {
+        super(entityManagerFactory, em);
+    }
 
-
-
+    public KapollerDAO() {
+        super();
+    }
 
 
     public Kapoller update(Kapoller kapoller) throws Exception {
