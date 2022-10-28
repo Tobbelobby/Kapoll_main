@@ -26,32 +26,41 @@ public class Controller {
     //public Controller(){}
 
     //////////////////////// KAPOLLER
-    @GetMapping("/Kapoller")
+    @GetMapping("/api/Kapoller")
     List<Kapoller> GetAllKapollers(){
         return kapollerDAO.getAll();
     }
 
-    @GetMapping("/Kapoller/{id}")
+    @GetMapping("/api/Kapoller/{id}")
     Kapoller GetKapoller(@PathVariable Long id){ return kapollerDAO.get(id);}
 
     //FIX! test
-    @PutMapping("Kapoller")
-    void newKapoller(@RequestBody Kapoller newKapoller){
+    @PutMapping("/api/Kapoller/{id}")
+    void updateKapoller(@RequestBody Kapoller newKapoller, @PathVariable Long id) throws Exception {
+        newKapoller.setId(id);
+        kapollerDAO.update(newKapoller);
+    }
+
+    @PostMapping("/api/Kapoller")
+    public void newKapoller(@RequestBody Kapoller newKapoller) {
         kapollerDAO.addAndSave(newKapoller);
     }
 
-
+    @DeleteMapping("/api/Kapoller/{id}")
+    public void deleteKapoller(@PathVariable Long id) {
+        kapollerDAO.delete(kapollerDAO.get(id));
+    }
 
     //////////////////////// POLL
-    @GetMapping("/Poll")
+    @GetMapping("/api/Poll")
     List<Poll> GetAllPolls(){
         return pollDAO.getAll();
     }
 
-    @GetMapping("/Poll/{id}")
+    @GetMapping("/api/Poll/{id}")
     Poll GetPoll(@PathVariable Long id){ return pollDAO.get(id);}
 
-    @PutMapping("Poll")
+    @PutMapping("/apiPoll")
     void newPoll(@RequestBody Poll newPoll){
         pollDAO.addAndSave(newPoll);
     }
@@ -59,15 +68,15 @@ public class Controller {
 
 
     //////////////////////// POLLRESULT
-    @GetMapping("/PollResult")
+    @GetMapping("/api/PollResult")
     List<Poll_result> GetAllPollRes(){
         return pollResDAO.getAll();
     }
 
-    @GetMapping("/PollResult/{id}")
+    @GetMapping("/api/PollResult/{id}")
     Poll_result GetPollRes(@PathVariable Long id){ return pollResDAO.get(id);}
 
-    @PutMapping("PollResult")
+    @PutMapping("/apiPollResult")
     void newPollRes(@RequestBody Poll_result newPollRes){
         pollResDAO.addAndSave(newPollRes);
     }
@@ -75,26 +84,20 @@ public class Controller {
 
 
     //////////////////////// VOTERS
-    @GetMapping("/Voters")
+    @GetMapping("/api/Voters")
     List<Voters> GetAllVoters(){
         return voterDAO.getAll();
     }
 
-    @GetMapping("/Voters/{id}")
+    @GetMapping("/api/Voters/{id}")
     Voters GetVote(@PathVariable Long id){ return voterDAO.get(id);}
 
-    @PutMapping("Voters")
+    @PutMapping("/apiVoters")
     void newVote(@RequestBody Voters newVote){voterDAO.addAndSave(newVote);}
 
 
     //FIX - add mappings
     //PostMapping, PutMapping, DeleteMapping,
-
-
-
-
-
-
 
 
 
