@@ -9,6 +9,7 @@ import com.example.Kapoll.Kapoll_db.tables.Kapoller;
 import com.example.Kapoll.Kapoll_db.tables.Poll;
 import com.example.Kapoll.Kapoll_db.tables.Poll_result;
 import com.example.Kapoll.Kapoll_db.tables.Voters;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,22 +33,22 @@ public class Controller {
     }
 
     @GetMapping("/api/Kapoller/{id}")
-    Kapoller GetKapoller(@PathVariable Long id){ return kapollerDAO.get(id);}
+    Kapoller GetKapoller(@ParameterObject  @PathVariable Long id){ return kapollerDAO.get(id);}
 
     //FIX! test
     @PutMapping("/api/Kapoller/{id}")
-    void updateKapoller(@RequestBody Kapoller newKapoller, @PathVariable Long id) throws Exception {
+    void updateKapoller(@ParameterObject @RequestBody Kapoller newKapoller, @PathVariable Long id) throws Exception {
         newKapoller.setId(id);
         kapollerDAO.update(newKapoller);
     }
 
     @PostMapping("/api/Kapoller")
-    public void newKapoller(@RequestBody Kapoller newKapoller) {
+    public void newKapoller(@ParameterObject @RequestBody Kapoller newKapoller) {
         kapollerDAO.addAndSave(newKapoller);
     }
 
     @DeleteMapping("/api/Kapoller/{id}")
-    public void deleteKapoller(@PathVariable Long id) {
+    public void deleteKapoller(@ParameterObject @PathVariable Long id) {
         kapollerDAO.delete(kapollerDAO.get(id));
     }
 
@@ -58,10 +59,10 @@ public class Controller {
     }
 
     @GetMapping("/api/Poll/{id}")
-    Poll GetPoll(@PathVariable Long id){ return pollDAO.get(id);}
+    Poll GetPoll(@ParameterObject @PathVariable Long id){ return pollDAO.get(id);}
 
     @PutMapping("/apiPoll")
-    void newPoll(@RequestBody Poll newPoll){
+    void newPoll(@ParameterObject @RequestBody Poll newPoll){
         pollDAO.addAndSave(newPoll);
     }
 
@@ -74,10 +75,10 @@ public class Controller {
     }
 
     @GetMapping("/api/PollResult/{id}")
-    Poll_result GetPollRes(@PathVariable Long id){ return pollResDAO.get(id);}
+    Poll_result GetPollRes(@ParameterObject @PathVariable Long id){ return pollResDAO.get(id);}
 
     @PutMapping("/apiPollResult")
-    void newPollRes(@RequestBody Poll_result newPollRes){
+    void newPollRes(@ParameterObject @RequestBody Poll_result newPollRes){
         pollResDAO.addAndSave(newPollRes);
     }
 
@@ -90,10 +91,10 @@ public class Controller {
     }
 
     @GetMapping("/api/Voters/{id}")
-    Voters GetVote(@PathVariable Long id){ return voterDAO.get(id);}
+    Voters GetVote(@ParameterObject @PathVariable Long id){ return voterDAO.get(id);}
 
     @PutMapping("/apiVoters")
-    void newVote(@RequestBody Voters newVote){voterDAO.addAndSave(newVote);}
+    void newVote(@ParameterObject @RequestBody Voters newVote){voterDAO.addAndSave(newVote);}
 
 
     //FIX - add mappings
