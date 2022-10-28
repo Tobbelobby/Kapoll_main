@@ -9,6 +9,11 @@ import com.example.Kapoll.Kapoll_db.tables.Kapoller;
 import com.example.Kapoll.Kapoll_db.tables.Poll;
 import com.example.Kapoll.Kapoll_db.tables.Poll_result;
 import com.example.Kapoll.Kapoll_db.tables.Voters;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +37,15 @@ public class Controller {
         return kapollerDAO.getAll();
     }
 
+    @Operation(summary = "Get a Kapoller by its id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the Kapoller",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Kapoller.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Kapoller not found",
+                    content = @Content) })
     @GetMapping("/api/Kapoller/{id}")
     Kapoller GetKapoller(@ParameterObject  @PathVariable Long id){ return kapollerDAO.get(id);}
 
@@ -46,6 +60,9 @@ public class Controller {
     public void newKapoller(@ParameterObject @RequestBody Kapoller newKapoller) {
         kapollerDAO.addAndSave(newKapoller);
     }
+
+
+
 
     @DeleteMapping("/api/Kapoller/{id}")
     public void deleteKapoller(@ParameterObject @PathVariable Long id) {
