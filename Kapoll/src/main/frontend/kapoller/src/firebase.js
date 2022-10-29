@@ -2,8 +2,9 @@
 
 import firebase from "firebase/app"
 import "firebase/auth"
+import {initializeApp} from "firebase/app"
 
-const app = firebase.initializeApp({
+const app = initializeApp({
     apiKey: "AIzaSyCjRtqoXz1m2_xjwI6tz5dVBTTBmTMoZSQ",
     authDomain: "kapoller-77076.firebaseapp.com",
     projectId: "kapoller-77076",
