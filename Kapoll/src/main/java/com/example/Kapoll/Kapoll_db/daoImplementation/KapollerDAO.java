@@ -1,11 +1,15 @@
 package com.example.Kapoll.Kapoll_db.daoImplementation;
 
 import com.example.Kapoll.Kapoll_db.tables.Kapoller;
+import com.example.Kapoll.Kapoll_db.tables.Poll;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
 
 @Configuration
 public class KapollerDAO extends MainImplementation{
@@ -60,6 +64,11 @@ public class KapollerDAO extends MainImplementation{
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
+    }
+    public Set<Object> getPollIds(Set<Poll> polls) {
+        Set<Object> pollIds = (Set<Object>) polls.stream().map((poll)-> poll.getId());
+        return pollIds;
+
     }
 
     @Override

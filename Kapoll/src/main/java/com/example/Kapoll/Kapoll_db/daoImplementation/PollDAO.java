@@ -65,11 +65,6 @@ public class PollDAO extends MainImplementation {
             if (updatedPoll == null)
                 throw new Exception("Employee not found");
 
-            if (poll.getOwner() != null) {
-                updatedPoll.setOwner(poll.getOwner());
-                poll.getOwner().removeFromPolls(poll);
-                poll.getOwner().addToPolls(updatedPoll);
-            }
 
             if (poll.getTitle() != null) {
                 updatedPoll.setTitle(poll.getTitle());

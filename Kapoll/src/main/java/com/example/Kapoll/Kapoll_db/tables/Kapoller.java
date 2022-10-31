@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -21,6 +24,7 @@ public class Kapoller {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
     @JsonManagedReference
     private Set<Poll> polls;
+
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
     public String getFirstName() {
@@ -67,8 +71,11 @@ public class Kapoller {
         polls.remove(poll);
     }
 
+    public Set<Object> getPollIds(Set<Poll> polls) {
+        Set<Object> pollIds = (Set<Object>) polls.stream().map((poll)-> poll.getId());
+        return pollIds;
 
-
+    }
     public void setPolls(Set<Poll> poll) {
         this.polls = poll;
     }
