@@ -20,6 +20,14 @@ public class PollDAO extends MainImplementation {
 
     List<Poll> polls = new ArrayList<>();
 
+    public PollDAO(EntityManagerFactory entityManagerFactory, EntityManager em) {
+        super(entityManagerFactory, em);
+    }
+
+    public PollDAO() {
+
+    }
+
     @Override
     public Poll get(Long id) {
         return em.find(Poll.class, id);
@@ -57,6 +65,7 @@ public class PollDAO extends MainImplementation {
             if (updatedPoll == null)
                 throw new Exception("Employee not found");
 
+
             if (poll.getTitle() != null) {
                 updatedPoll.setTitle(poll.getTitle());
             }
@@ -78,6 +87,7 @@ public class PollDAO extends MainImplementation {
             }
             polls.add(updatedPoll);
             save(updatedPoll);
+            save(updatedPoll.getOwner());
             return updatedPoll;
 
         }

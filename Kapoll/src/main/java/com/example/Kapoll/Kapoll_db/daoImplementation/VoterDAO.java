@@ -18,6 +18,14 @@ public class VoterDAO extends MainImplementation {
     EntityManager em = factory.createEntityManager();
     EntityTransaction emt = em.getTransaction();
 
+    public VoterDAO(EntityManagerFactory entityManagerFactory, EntityManager em) {
+        super(entityManagerFactory, em);
+    }
+
+    public VoterDAO() {
+
+    }
+
 
     public Voters update(Voters voter) throws Exception {
         try {

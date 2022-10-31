@@ -17,6 +17,14 @@ public class PollResDAO extends MainImplementation {
 
     List<Poll_result> pollResList = new ArrayList<>();
 
+    public PollResDAO(EntityManagerFactory entityManagerFactory, EntityManager em) {
+        super(entityManagerFactory, em);
+    }
+
+    public PollResDAO() {
+
+    }
+
     @Override
     public Poll_result get(Long id) {
         return em.find(Poll_result.class, id);
