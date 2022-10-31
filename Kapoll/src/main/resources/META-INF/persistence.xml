@@ -4,10 +4,10 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="Kapoller_db" transaction-type="RESOURCE_LOCAL">
 
-        <class>com.example.Kapoll.Kapoll_db.tables.Kapoller</class>
-        <class>com.example.Kapoll.Kapoll_db.tables.Poll</class>
-        <class>com.example.Kapoll.Kapoll_db.tables.Poll_result</class>
-        <class>com.example.Kapoll.Kapoll_db.tables.Voters</class>
+        <class>com.example.kapoll.Kapoll_db.tables.Kapoller</class>
+        <class>com.example.kapoll.Kapoll_db.tables.Poll</class>
+        <class>com.example.kapoll.Kapoll_db.tables.Poll_result</class>
+        <class>com.example.kapoll.Kapoll_db.tables.Voters</class>
 
 
         <properties>

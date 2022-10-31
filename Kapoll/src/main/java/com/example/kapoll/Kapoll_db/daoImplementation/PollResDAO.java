@@ -1,6 +1,6 @@
-package com.example.Kapoll.Kapoll_db.daoImplementation;
+package com.example.kapoll.Kapoll_db.daoImplementation;
 
-import com.example.Kapoll.Kapoll_db.tables.Poll_result;
+import com.example.kapoll.Kapoll_db.tables.Poll_result;
 
 import javax.persistence.*;
 import java.util.ArrayList;

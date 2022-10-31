@@ -1,4 +1,4 @@
-package com.example.Kapoll.Kapoll_db.daoImplementation;
+package com.example.kapoll.Kapoll_db.daoImplementation;
 
 
 import javax.persistence.*;

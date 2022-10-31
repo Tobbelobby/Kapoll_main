@@ -1,8 +1,6 @@
-package com.example.Kapoll.Kapoll_db.daoImplementation;
+package com.example.kapoll.Kapoll_db.daoImplementation;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public interface KapDao<T> {
 

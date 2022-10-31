@@ -1,8 +1,8 @@
-package com.example.Kapoll.Kapoll_db.daoImplementation;
+package com.example.kapoll.Kapoll_db.daoImplementation;
 
 
 
-import com.example.Kapoll.Kapoll_db.tables.Voters;
+import com.example.kapoll.Kapoll_db.tables.Voters;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class VoterDAO extends MainImplementation {
     public void removeFromList(Object o) {
         voterList.remove(o);
     }
-    
+
 
     @Override
     public boolean exist(Long id) {
