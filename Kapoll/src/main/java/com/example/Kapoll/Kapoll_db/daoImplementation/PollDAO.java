@@ -1,8 +1,7 @@
 package com.example.Kapoll.Kapoll_db.daoImplementation;
 
 import com.example.Kapoll.Kapoll_db.tables.Poll;
-
-
+import com.example.Kapoll.Kapoll_db.tables.Poll_result;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,23 +10,13 @@ import java.util.List;
 public class PollDAO extends MainImplementation {
 
 
-
-    public static final String PERSISTENCE_UNIT_NAME = "Kapoller_db";
-
-    EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-    EntityManager em = factory.createEntityManager();
-    EntityTransaction emt = em.getTransaction();
-
     List<Poll> polls = new ArrayList<>();
 
     public PollDAO(EntityManagerFactory entityManagerFactory, EntityManager em) {
         super(entityManagerFactory, em);
     }
 
-    public PollDAO() {
-
-    }
-
+    public PollDAO() {}
     @Override
     public Poll get(Long id) {
         return em.find(Poll.class, id);
@@ -55,6 +44,14 @@ public class PollDAO extends MainImplementation {
         }
     }
 
+    public Long getOwner(Long pollId) {
+        Query query = em.createQuery("SELECT e.owner.id FROM Poll e WHERE e.id = ?1 ").setParameter(1, pollId);
+        List list = query.getResultList();
+        Object id = list.get(0);
+        Long kapollerId = (Long)(id);
+        return kapollerId;
+    }
+
     public Poll update(Poll poll) throws Exception {
         try {
             if (poll.getId() == null)
@@ -79,30 +76,20 @@ public class PollDAO extends MainImplementation {
             }
 
             if (poll.getPoll_results() != null){
-                updatedPoll.setPoll_results(poll.getPoll_results());
+                for (Poll_result poll_result : poll.getPoll_results()) {
+                    updatedPoll.addToResults(poll_result);
+                }
             }
-
             if (poll.getVote() != null) {
                 updatedPoll.setVote(poll.getVote());
             }
             polls.add(updatedPoll);
             save(updatedPoll);
-            save(updatedPoll.getOwner());
             return updatedPoll;
 
         }
         catch (Exception ex){
             throw new Exception(ex.getMessage());
         }
-    /*public void update(Poll poll, ArrayList<Object> params) {
-        poll.setTitle((String) params.get(0));
-        poll.setQuestion((String) params.get(1));
-        poll.setTime((Integer) params.get(2));
-        polls.add(poll);
-        save(poll);
-
-    }*/
-
-
 
 }}

@@ -14,11 +14,7 @@ import java.util.stream.Stream;
 @Configuration
 public class KapollerDAO extends MainImplementation{
     public static final String PERSISTENCE_UNIT_NAME = "Kapoller_db";
-    List<Kapoller> mainlist = new ArrayList<>();/*
-    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-    EntityManager em = entityManagerFactory.createEntityManager();
-    EntityTransaction emt = em.getTransaction();*/
-
+    List<Kapoller> mainlist = new ArrayList<>();
     public KapollerDAO(EntityManagerFactory entityManagerFactory, EntityManager em) {
         super(entityManagerFactory, em);
     }
@@ -26,6 +22,9 @@ public class KapollerDAO extends MainImplementation{
     public KapollerDAO() {
         super();
     }
+
+    private PollDAO pollDAO;
+
 
 
     public Kapoller update(Kapoller kapoller) throws Exception {
@@ -55,7 +54,12 @@ public class KapollerDAO extends MainImplementation{
             }
 
             if (kapoller.getPolls() != null) {
-                updatedKapoller.setPolls(kapoller.getPolls());
+                pollDAO = new PollDAO();
+                for (Poll poll : kapoller.getPolls()) {
+                    poll = pollDAO.update(pollDAO.get(poll.getId()));
+                    poll.setOwner(kapoller);
+                    updatedKapoller.addToPolls(poll);
+                }
             }
             mainlist.add(updatedKapoller);
             save(updatedKapoller);
@@ -82,6 +86,7 @@ public class KapollerDAO extends MainImplementation{
         mainlist = query.getResultList();
         return mainlist;
     }
+
 
     @Override
     public void removeFromList(Object o) {
