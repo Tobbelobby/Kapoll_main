@@ -21,6 +21,9 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
+/**
+ *
+ */
 @RestController
 public class Controller {
 
@@ -212,9 +215,6 @@ public class Controller {
         }
     }
 
-
-    //FIX - add mappings
-    //PostMapping, PutMapping, DeleteMapping,
 
 
 }
