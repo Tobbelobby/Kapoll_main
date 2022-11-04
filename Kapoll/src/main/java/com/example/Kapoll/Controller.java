@@ -12,7 +12,6 @@ import com.example.Kapoll.Kapoll_db.tables.Voters;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -101,6 +100,7 @@ public class Controller {
         if (pollDAO.exist(id)) {
             newPoll.setId(id);
             pollDAO.update(newPoll);
+            kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
         } else {
             throw new NotFoundException(id, "poll");
         }
