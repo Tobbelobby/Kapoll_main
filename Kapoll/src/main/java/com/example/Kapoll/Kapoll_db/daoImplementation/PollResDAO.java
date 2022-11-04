@@ -8,13 +8,6 @@ import java.util.List;
 
 public class PollResDAO extends MainImplementation {
 
-    public static final String PERSISTENCE_UNIT_NAME = "Kapoller_db";
-
-
-    EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-    EntityManager em = factory.createEntityManager();
-    EntityTransaction emt = em.getTransaction();
-
     List<Poll_result> pollResList = new ArrayList<>();
 
     public PollResDAO(EntityManagerFactory entityManagerFactory, EntityManager em) {

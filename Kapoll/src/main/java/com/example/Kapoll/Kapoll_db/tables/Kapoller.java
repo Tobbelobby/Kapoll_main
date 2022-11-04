@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Component
 @Entity
@@ -21,7 +18,7 @@ public class Kapoller {
     private String userName;
     private String password;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Poll> polls;
 
@@ -66,7 +63,6 @@ public class Kapoller {
     public void addToPolls(Poll newPoll) {
         polls.add(newPoll);
     }
-
     public void removeFromPolls(Poll poll) {
         polls.remove(poll);
     }

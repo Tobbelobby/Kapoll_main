@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -11,19 +13,14 @@ public class Poll {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
-
     private String title;
     private String question;
     private int time;
 
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner")
     @JsonBackReference
     private Kapoller owner;
-
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pollid")
     @JsonManagedReference
@@ -32,8 +29,13 @@ public class Poll {
     @OneToOne
     private Voters vote;
 
-    public Long getId() {return id;}
-    public void setId(Long id) {this.id = id;}
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -59,10 +61,7 @@ public class Poll {
         this.time = time;
     }
 
-
-    public Kapoller getOwner() {
-        return owner;
-    }
+    public Kapoller getOwner() {return owner;}
 
     public void setOwner(Kapoller owner) {
         this.owner = owner;
@@ -70,6 +69,9 @@ public class Poll {
 
     public Set<Poll_result> getPoll_results() {
         return poll_results;
+    }
+    public void addToResults(Poll_result pollRes) {
+        poll_results.add(pollRes);
     }
 
     public void setPoll_results(Set<Poll_result> poll_results) {
