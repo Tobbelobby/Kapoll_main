@@ -57,4 +57,19 @@
   background-color: #DEB986;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.flex {
+  display: flex
+}
+
+.space_around {
+  justify-content: space-evenly;
+
+}
+.fill {
+  height: 100vh;
+  width: 100%;
 }

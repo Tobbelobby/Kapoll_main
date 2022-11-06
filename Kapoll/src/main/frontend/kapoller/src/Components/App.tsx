@@ -6,6 +6,7 @@ import "../App.css";
 import AddPoll from "./Poll/createPoll";
 import Poll from "./Poll/Poll";
 import PollsList from "./Poll/PollsList";
+import PollOnline from "./VoteOnPoll/PollOnline"
 
 const App: React.FC = () => {
     return (
@@ -28,12 +29,13 @@ const App: React.FC = () => {
                 </div>
             </nav>
 
-            <div className="container mt-3">
+            <div className="flex space_around fill">
                 <Routes>
                     <Route path="/" element={<PollsList/>} />
                     <Route path="/Poll" element={<PollsList/>} />
                     <Route path="/add" element={<AddPoll/>} />
                     <Route path="/Poll/:id" element={<Poll/>} />
+                    <Route path={"/test"} element={<PollOnline/>}/>
                 </Routes>
             </div>
         </div>
