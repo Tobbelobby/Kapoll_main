@@ -1,23 +1,32 @@
 import http from "../http-common";
 import PollData from "../types/Poll";
 
-const getAll = () => {
-    return http.get<Array<PollData>>("/Poll")
+const getAll = async () => {
+    return await http.get<Array<PollData>>("/Poll")
 };
 
-const get = (id: string) => {
-    return http.get<PollData>(`/Poll/${id}`);
+const get = async (id: string) => {
+    return await http.get<PollData>(`/Poll/${id}`);
+};
+const url = "http://localhost:8080/api"
+const create = async (data: PollData) => {
+    return await fetch(`${url}/Poll`, {
+        method: "POST",
+        headers: {'Content-type': 'application/json',},
+        body: JSON.stringify(data)
+    })
+
+};
+const update = async (id: string, data: PollData) => {
+    return await fetch(`${url}/Poll/${id}`, {
+        method: 'PUT',
+        headers: {'Content-type': 'application/json',},
+        body: JSON.stringify(data)
+    })
 };
 
-const create = (data: PollData) => {
-    return http.post<PollData>("/Poll", data)
-};
-const update = (id: string, data: PollData) => {
-    return http.put<any>(`/Poll/${id}`, data);
-};
-
-const remove = (id: string) => {
-    return http.delete<any>(`/Poll/${id}`);
+const remove = async (id: string) => {
+    return await http.delete<any>(`/Poll/${id}`);
 };
 
 const PollService = {

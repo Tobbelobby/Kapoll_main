@@ -73,6 +73,17 @@ const AddPoll: React.FC = () => {
                             onChange={handleInputChange}
                             name="question"/>
                     </div>
+                    <div className="form-group">
+                        <label htmlFor="time ">Time in seconds</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="time"
+                            required
+                            value={poll.time}
+                            onChange={handleInputChange}
+                            name="time"/>
+                    </div>
                     <button onClick={savePoll} className="btn btn-success">
                         Submit
                     </button>

@@ -18,12 +18,15 @@ import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.json.Json;
 import java.util.List;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  *
  */
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="http://localhost:3000", allowedHeaders = "https://dweet.io/dweet/for/Kapoll-results")
 @RestController
 public class Controller {
 
@@ -157,6 +160,13 @@ public class Controller {
         pollResDAO.addAndSave(newPollRes);
     }
 
+    @CrossOrigin(origins ="https://dweet.io/dweet/for/Kapoll-results", methods = {POST})
+    @PostMapping("https://dweet.io/dweet/for/Kapoll-results")
+    void postResultToDweet(@ParameterObject @RequestBody Json data) {
+        
+    }
+
+    @CrossOrigin(origins="http://localhost:3000")
     @PutMapping("/api/PollResult/{id}")
     void updatePollRes(@ParameterObject @RequestBody Poll_result newPollRes, @PathVariable Long id) throws Exception {
         if (pollResDAO.exist(id)) {
