@@ -75,5 +75,18 @@ public class Kapoller {
     public void setPolls(Set<Poll> poll) {
         this.polls = poll;
     }
+
+
+    @Override
+    public String toString() {
+        return "Kapoller{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", polls=" + polls +
+                '}';
+    }
     
 }

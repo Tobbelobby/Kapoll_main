@@ -85,4 +85,17 @@ public class Poll {
     public void setVote(Voters vote) {
         this.vote = vote;
     }
+
+    @Override
+    public String toString() {
+        return "Poll{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", question='" + question + '\'' +
+                ", time=" + time +
+                ", owner=" + owner +
+                ", poll_results=" + poll_results +
+                ", vote=" + vote +
+                '}';
+    }
 }

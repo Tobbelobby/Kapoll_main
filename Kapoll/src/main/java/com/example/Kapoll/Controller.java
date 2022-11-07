@@ -9,20 +9,19 @@ import com.example.Kapoll.Kapoll_db.tables.Kapoller;
 import com.example.Kapoll.Kapoll_db.tables.Poll;
 import com.example.Kapoll.Kapoll_db.tables.Poll_result;
 import com.example.Kapoll.Kapoll_db.tables.Voters;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+
 
 /**
  *
  */
+@Slf4j
 @RestController
 public class Controller {
 
@@ -31,6 +30,12 @@ public class Controller {
     private PollDAO pollDAO = new PollDAO();
     private PollResDAO pollResDAO = new PollResDAO();
     private VoterDAO voterDAO = new VoterDAO();
+
+    private final RabbitTemplate rabbitTemplate;
+
+    public Controller(RabbitTemplate rabbitTemplate){
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     public static boolean isNumeric(String str) {
         return str != null && str.matches("[-+]?\\d*\\.?\\d+");
@@ -47,15 +52,6 @@ public class Controller {
         return kapollerDAO.getAll();
     }
 
-    @Operation(summary = "Get a Kapoller by its id")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the Kapoller",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Kapoller.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid id supplied",
-                    content = @Content),
-            @ApiResponse(responseCode = "404", description = "Kapoller not found",
-                    content = @Content) })
     @GetMapping("/api/Kapoller/{id}")
     Kapoller GetKapoller(@ParameterObject @PathVariable Long id) {
         if (kapollerDAO.exist(id)) {
@@ -80,6 +76,7 @@ public class Controller {
     @PostMapping("/api/Kapoller")
     public void newKapoller(@ParameterObject @RequestBody Kapoller newKapoller) {
         kapollerDAO.addAndSave(newKapoller);
+
     }
 
 
@@ -113,6 +110,8 @@ public class Controller {
     @PostMapping("/api/Poll")
     void newPoll(@ParameterObject @RequestBody Poll newPoll) {
         pollDAO.addAndSave(newPoll);
+        rabbitTemplate.convertAndSend( "","Poll",newPoll);
+        System.out.println("her kommer Poll:" + newPoll);
     }
 
     @PutMapping("/api/Poll/{id}")
@@ -154,6 +153,8 @@ public class Controller {
     @PostMapping("/api/PollResult")
     void newPollRes(@ParameterObject @RequestBody Poll_result newPollRes) {
         pollResDAO.addAndSave(newPollRes);
+        rabbitTemplate.convertAndSend( "","PollResults",newPollRes);
+        System.out.println("her kommer:" + newPollRes);
     }
 
     @PutMapping("/api/PollResult/{id}")

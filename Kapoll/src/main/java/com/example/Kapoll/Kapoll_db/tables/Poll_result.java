@@ -58,4 +58,15 @@ public class Poll_result {
     public void setUtilDate(Date utilDate) {
         this.utilDate = utilDate;
     }
+
+    @Override
+    public String toString() {
+        return "Poll_result{" +
+                "id=" + id +
+                ", utilDate=" + utilDate +
+                ", noVote=" + noVote +
+                ", yesVote=" + yesVote +
+                ", pollid=" + pollid +
+                '}';
+    }
 }
