@@ -1,4 +1,4 @@
-package com.example.Kapoll;
+package com.example.Kapoll.Configuration;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import org.eclipse.persistence.config.BatchWriting;

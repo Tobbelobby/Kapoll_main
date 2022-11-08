@@ -13,7 +13,6 @@ import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -21,7 +20,6 @@ import java.util.List;
 /**
  *
  */
-@Slf4j
 @RestController
 public class Controller {
 
@@ -79,9 +77,6 @@ public class Controller {
 
     }
 
-
-
-
     @DeleteMapping("/api/Kapoller/{id}")
     public void deleteKapoller(@ParameterObject @PathVariable Long id) {
         if (kapollerDAO.exist(id)) {
@@ -110,8 +105,8 @@ public class Controller {
     @PostMapping("/api/Poll")
     void newPoll(@ParameterObject @RequestBody Poll newPoll) {
         pollDAO.addAndSave(newPoll);
-        rabbitTemplate.convertAndSend( "","Poll",newPoll);
-        System.out.println("her kommer Poll:" + newPoll);
+        rabbitTemplate.convertAndSend( "","Poll",newPoll.toString());
+
     }
 
     @PutMapping("/api/Poll/{id}")
@@ -153,8 +148,8 @@ public class Controller {
     @PostMapping("/api/PollResult")
     void newPollRes(@ParameterObject @RequestBody Poll_result newPollRes) {
         pollResDAO.addAndSave(newPollRes);
-        rabbitTemplate.convertAndSend( "","PollResults",newPollRes);
-        System.out.println("her kommer:" + newPollRes);
+        rabbitTemplate.convertAndSend( "","PollResults",newPollRes.toString());
+
     }
 
     @PutMapping("/api/PollResult/{id}")
