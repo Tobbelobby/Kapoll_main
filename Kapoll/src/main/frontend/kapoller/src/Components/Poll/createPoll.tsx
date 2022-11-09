@@ -25,6 +25,9 @@ const AddPoll: React.FC = () => {
 
         PollService.create(data)
             .then((response: any) => {
+                response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+                response.header("Access-Control-Allow-Origin", "*");
+                response.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
                 setPoll({
                     title: response.data.title,
                     question: response.data.question,

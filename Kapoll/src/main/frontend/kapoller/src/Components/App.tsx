@@ -7,10 +7,12 @@ import AddPoll from "./Poll/createPoll";
 import Poll from "./Poll/Poll";
 import PollsList from "./Poll/PollsList";
 import PollOnline from "./VoteOnPoll/PollOnline"
+import StartPoll from "./Poll/startPoll";
 
 const App: React.FC = () => {
     return (
         <div className={'background'}>
+
             <nav className="navbar navbar-expand navbar-dark bg-dark">
                 <a href="/Poll" className="navbar-brand">
                     Kapoll!
@@ -35,7 +37,7 @@ const App: React.FC = () => {
                     <Route path="/Poll" element={<PollsList/>} />
                     <Route path="/add" element={<AddPoll/>} />
                     <Route path="/Poll/:id" element={<Poll/>} />
-                    <Route path={"/test"} element={<PollOnline/>}/>
+                    <Route path={"/:id"} element={<StartPoll/>}/>
                 </Routes>
             </div>
         </div>

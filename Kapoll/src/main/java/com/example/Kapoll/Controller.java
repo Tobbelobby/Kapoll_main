@@ -26,7 +26,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 /**
  *
  */
-@CrossOrigin(origins="http://localhost:3000", allowedHeaders = "https://dweet.io/dweet/for/Kapoll-results")
+@CrossOrigin(origins="http://localhost:3000", methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE, RequestMethod.OPTIONS})
 @RestController
 public class Controller {
 
@@ -113,18 +113,18 @@ public class Controller {
             throw new NotFoundException(id, "poll");
         }
     }
-
+    @CrossOrigin(origins="http://localhost:3000")
     @PostMapping("/api/Poll")
     void newPoll(@ParameterObject @RequestBody Poll newPoll) {
         pollDAO.addAndSave(newPoll);
     }
-
+    @CrossOrigin(origins="http://localhost:3000")
     @PutMapping("/api/Poll/{id}")
     void updatePoll(@ParameterObject @RequestBody Poll newPoll, @PathVariable Long id) throws Exception {
         if (pollDAO.exist(id)) {
             newPoll.setId(id);
             pollDAO.update(newPoll);
-            kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
+            //kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
         } else {
             throw new NotFoundException(id, "poll");
         }

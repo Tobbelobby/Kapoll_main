@@ -87,7 +87,7 @@ const PollsList: React.FC = () => {
                         </div>
                         <div>
                             <label>
-                                <strong>Description:</strong>
+                                <strong>Question:</strong>
                             </label>{" "}
                             {currentPoll.question}
                         </div>
@@ -104,6 +104,7 @@ const PollsList: React.FC = () => {
                         >
                             Edit
                         </Link>
+                        <button onClick={() =>  navigator.clipboard.writeText('localhost:3000/'+currentPoll.id)}>Copy Link</button>
                     </div>
                 ) : (
                     <div>

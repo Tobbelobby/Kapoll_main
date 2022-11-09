@@ -1,7 +1,7 @@
 import PollData from "../../types/Poll";
 
 interface dweetResult {
-    pollTitle: string,
+    pollQuestion: string,
     yesVotes: number,
     noVotes: number,
     timePublished: number

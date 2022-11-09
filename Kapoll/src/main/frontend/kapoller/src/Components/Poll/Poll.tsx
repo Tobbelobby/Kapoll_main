@@ -44,10 +44,14 @@ const Poll: React.FC = () => {
     const updatePoll = () => {
         PollService.update(currentPoll.id, currentPoll)
             .then((response: any) => {
+                response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+                response.header("Access-Control-Allow-Origin", "*");
+                response.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
                 console.log(response.data);
                 setMessage("The Poll was updated successfully!");
             })
             .catch((e: Error) => {
+                console.log('heiii')
                 console.log(e);
             });
     };
