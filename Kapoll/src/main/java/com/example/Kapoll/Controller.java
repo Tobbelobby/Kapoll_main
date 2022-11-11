@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.json.Json;
+import java.net.URLDecoder;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -60,7 +61,7 @@ public class Controller {
 
     @GetMapping("/api/Kapoller/check/{username}")
     boolean getTrue(@ParameterObject @PathVariable String username) {
-        return kapollerDAO.existByUName(username);
+        return kapollerDAO.getByUserName(username);
     }
 
     @GetMapping("/api/Kapoller/{id}")

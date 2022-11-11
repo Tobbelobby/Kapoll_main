@@ -8,7 +8,9 @@ const getAll = () => {
 const get = (id: number) => {
     return http.get<KapollerData>(`/Kapoller/${id}`);
 };
-
+const existsAccount = async (data: string | null) =>{
+    return (http.get<KapollerData>(`/Kapoller/check/${data}`));
+}
 const create = (data: KapollerData) => {
     return http.post<KapollerData>("/Kapoller", data)
 };
@@ -26,6 +28,7 @@ const KapollerService = {
     create,
     update,
     remove,
+    existsAccount
 };
 
 export default KapollerService;

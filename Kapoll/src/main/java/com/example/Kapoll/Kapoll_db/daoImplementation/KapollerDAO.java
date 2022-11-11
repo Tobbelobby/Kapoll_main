@@ -25,11 +25,10 @@ public class KapollerDAO extends MainImplementation{
 
     private PollDAO pollDAO;
 
-    public boolean existByUName(String userName){
-        return (!(getByUserName(userName)==(null)));
-    }
-    public Kapoller getByUserName(String userName){
-        return (em.find(Kapoller.class, userName));
+    public boolean getByUserName(String userName){
+        Query query = em.createQuery("SELECT e FROM Kapoller e WHERE e.userName  = ?1 ").setParameter(1, userName);
+        List list = query.getResultList();
+        return list.size()>0;
     }
 
     public Kapoller update(Kapoller kapoller) throws Exception {
