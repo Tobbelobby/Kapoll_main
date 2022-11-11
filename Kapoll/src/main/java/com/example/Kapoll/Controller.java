@@ -9,17 +9,25 @@ import com.example.Kapoll.Kapoll_db.tables.Kapoller;
 import com.example.Kapoll.Kapoll_db.tables.Poll;
 import com.example.Kapoll.Kapoll_db.tables.Poll_result;
 import com.example.Kapoll.Kapoll_db.tables.Voters;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.json.Json;
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  *
  */
+@CrossOrigin(origins="http://localhost:3000", methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE, RequestMethod.OPTIONS})
 @RestController
 public class Controller {
 
@@ -74,8 +82,10 @@ public class Controller {
     @PostMapping("/api/Kapoller")
     public void newKapoller(@ParameterObject @RequestBody Kapoller newKapoller) {
         kapollerDAO.addAndSave(newKapoller);
-
     }
+
+
+
 
     @DeleteMapping("/api/Kapoller/{id}")
     public void deleteKapoller(@ParameterObject @PathVariable Long id) {
@@ -101,19 +111,19 @@ public class Controller {
             throw new NotFoundException(id, "poll");
         }
     }
-
+    @CrossOrigin(origins="http://localhost:3000")
     @PostMapping("/api/Poll")
     void newPoll(@ParameterObject @RequestBody Poll newPoll) {
         pollDAO.addAndSave(newPoll);
 
     }
-
+    @CrossOrigin(origins="http://localhost:3000")
     @PutMapping("/api/Poll/{id}")
     void updatePoll(@ParameterObject @RequestBody Poll newPoll, @PathVariable Long id) throws Exception {
         if (pollDAO.exist(id)) {
             newPoll.setId(id);
             pollDAO.update(newPoll);
-            kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
+            //kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
         } else {
             throw new NotFoundException(id, "poll");
         }
@@ -151,6 +161,13 @@ public class Controller {
 
     }
 
+    @CrossOrigin(origins ="https://dweet.io/dweet/for/Kapoll-results", methods = {POST})
+    @PostMapping("https://dweet.io/dweet/for/Kapoll-results")
+    void postResultToDweet(@ParameterObject @RequestBody Json data) {
+
+    }
+
+    @CrossOrigin(origins="http://localhost:3000")
     @PutMapping("/api/PollResult/{id}")
     void updatePollRes(@ParameterObject @RequestBody Poll_result newPollRes, @PathVariable Long id) throws Exception {
         if (pollResDAO.exist(id)) {
