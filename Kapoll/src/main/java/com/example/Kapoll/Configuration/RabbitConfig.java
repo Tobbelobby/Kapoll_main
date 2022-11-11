@@ -6,9 +6,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfig {
-
+/*
     static final String queueName = "PollResults";
     static final String queueNamePoll = "Poll";
+
 
     @Bean
     Queue queue() {
@@ -19,5 +20,5 @@ public class RabbitConfig {
         return new Queue(queueNamePoll);
     }
 
-
+*/
 }

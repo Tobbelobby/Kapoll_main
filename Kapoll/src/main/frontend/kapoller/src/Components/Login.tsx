@@ -39,7 +39,9 @@ export default function Login() {
             //const token = result.credential.accessToken;
 
             // @ts-ignore
-            const token = result.user.getIdTokenResult();
+            const token = result.user?.refreshToken;
+            if (token) {sessionStorage.setItem('Auth Token', token)};
+
             console.log("TOKEN");
             console.log(token);
             // The signed-in user info.
@@ -82,7 +84,7 @@ export default function Login() {
                     userName: response.data.userName
                 });
                 setSubmitted(true);
-                console.log(response.data);
+                console.log(response.data.id);
             })
             .catch((e: Error) => {
                 console.log(e)
