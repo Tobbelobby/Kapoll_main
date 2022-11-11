@@ -21,13 +21,13 @@ public class RabbitMongoListener {
     @RabbitListener(queues = {"PollResults"})
     public void messageReceiver(String pollResult) throws JSONException {
         System.out.println("Received: " + pollResult);
-        JSONObject jsonObject= new JSONObject(pollResult );
-        int yesVote = jsonObject.getInt("yesVote");
-        int noVote = jsonObject.getInt("noVote");
-        Long utilDate = jsonObject.getLong("utilDate");
-        Long id = jsonObject.getLong("id");
-        //Long pollId = jsonObject.getLong("pollid");
-
+        JSONObject resultObject= new JSONObject(pollResult );
+        System.out.println(pollResult);
+        int yesVote = resultObject.getInt("yesVote");
+        int noVote = resultObject.getInt("noVote");
+        Long utilDate = resultObject.getLong("utilDate");
+        Long id = resultObject.getLong("id");
+        System.out.println(yesVote);
         mongoRepository.save(new PollResult(id,utilDate,yesVote,noVote));
 
     }

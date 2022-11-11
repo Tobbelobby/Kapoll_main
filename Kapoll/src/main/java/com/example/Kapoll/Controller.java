@@ -105,7 +105,6 @@ public class Controller {
     @PostMapping("/api/Poll")
     void newPoll(@ParameterObject @RequestBody Poll newPoll) {
         pollDAO.addAndSave(newPoll);
-        rabbitTemplate.convertAndSend( "","Poll",newPoll.toString());
 
     }
 
@@ -148,7 +147,7 @@ public class Controller {
     @PostMapping("/api/PollResult")
     void newPollRes(@ParameterObject @RequestBody Poll_result newPollRes) {
         pollResDAO.addAndSave(newPollRes);
-        rabbitTemplate.convertAndSend( "","PollResults",newPollRes.toString());
+        rabbitTemplate.convertAndSend( "","PollResults",newPollRes);
 
     }
 
