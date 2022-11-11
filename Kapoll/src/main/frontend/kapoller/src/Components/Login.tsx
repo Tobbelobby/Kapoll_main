@@ -5,6 +5,8 @@ import "../App.css";
 import {Form, Button, Card} from 'react-bootstrap'
 import {auth} from "../firebase";
 import firebase from "firebase/compat/app";
+import PollData from "../types/Poll";
+import PollService from "../services/PollService";
 import KapollerService from "../services/KapollerService";
 import KapollerData from "../types/Kapoller";
 
@@ -32,32 +34,26 @@ export default function Login() {
         navigate(path);
     }
     const logInGoogle = () =>{
-        auth.signInWithPopup(provider).then(async function (result) {
+        auth.signInWithPopup(provider).then(function (result) {
             // This gives you a Google Access Token.
             //const token = result.credential.accessToken;
 
             // @ts-ignore
-            const token = result.user.getIdTokenResult();
+            const token = result.user?.refreshToken;
+            if (token) {sessionStorage.setItem('Auth Token', token)};
+
             console.log("TOKEN");
             console.log(token);
             // The signed-in user info.
             const user = result.user;
             console.log(user);
-            console.log(user?.uid);
-            console.log("create new kapoller");
-            if (user) {
-                if (await KapollerService.existAccount(user.email)) {
-                    saveKapoller(user);
-                }
-            }
-
-            routeChange();
+            newKapoller();
+            routeChange()
 
         });
     }
 
     const initialKapoller = {
-        id: "",
         firstName: "",
         lastName: "",
         userName: ""
@@ -70,13 +66,11 @@ export default function Login() {
         setKapoller({...kapoller, [name]: value});
     };
 
-    const saveKapoller = (user: firebase.User) => {
-        console.log("save kapoller()");
+    const saveKapoller = () => {
         var data = {
-            id: user.uid,
-            firstName: user.displayName?.split(" ")[0],
-            lastName: user.displayName?.split(" ")[1],
-            userName: user.email
+            firstName: kapoller.firstName,
+            lastName: kapoller.lastName,
+            userName: kapoller.userName
         };
 
         KapollerService.create(data)
@@ -85,14 +79,12 @@ export default function Login() {
                 response.header("Access-Control-Allow-Origin", "*");
                 response.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
                 setKapoller({
-                    id: response.data.id,
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
                     userName: response.data.userName
                 });
                 setSubmitted(true);
-                console.log("response update")
-                console.log(response.data);
+                console.log(response.data.id);
             })
             .catch((e: Error) => {
                 console.log(e)
@@ -101,21 +93,147 @@ export default function Login() {
 
     //FIX only if not exist
     const newKapoller = () => {
-        console.log("New kapoller()");
         setKapoller(initialKapoller);
         setSubmitted(false)
     };
 
 
     return (
-        <div>
-            <h2 className="text-center mb-4">Welcome to Kapoll</h2>
-            <Form>
-                <Button className="w-100" onClick={logInGoogle} >Login with google</Button>
-            </Form>
-
-        </div>
+        <><Card>
+            <Card.Body>
+                <h2 className="text-center mb-4">Welcome to Kapoll</h2>
+                <Form>
+                    <Button className="w-100" onClick={logInGoogle} >Login with google</Button>
+                </Form>
+            </Card.Body>
+        </Card>
+        </>
     );
 }
+
+
+// import React, {useRef} from 'react'
+// import {Form, Button, Card} from 'react-bootstrap'
+// import {SignInWithGoogle, LogOutWithGoogle, SignIn} from "../firebase";
+// import "./test.css"
+// import ReactDOM from "react-dom/client";
+// import {render} from "react-dom";
+//
+// // render(
+// //     <div>
+// //         <h1>Hello, Welcome to React and TypeScript</h1>
+// //     </div>,
+// //     document.getElementById("root")
+// // );
+//
+//
+// export default function Login(){
+//     const emailRef = useRef()
+//     const passwordRef = useRef()
+//     const passwordConfirmRef = useRef()
+//
+//
+//
+//     return(
+//         <><Card>
+//             <Card.Body>
+//                 <div id="root"></div>
+//                 <h2 className="text-center mb-4">Welcome to Kapoll</h2>
+//                 <Form>
+//                     <Button className="w-100" onClick={SignIn} >Login with google</Button>
+//                 </Form>
+//             </Card.Body>
+//         </Card>
+//         </>
+//     )
+// }
+// export function Logout(){
+//     return(
+//         <><Card>
+//             <Card.Body>
+//                 <h2 className="text-center mb-4">You are logged in</h2>
+//                 <Form>
+//                     <Button className="w-100" onClick={LogOutWithGoogle} >Logout</Button>
+//                 </Form>
+//             </Card.Body>
+//         </Card>
+//         </>
+//     )
+// }
+
+
+//
+// class LoginControl extends React.Component {
+//     constructor(props: any) {
+//         super(props);
+//         this.handleLoginClick = this.handleLoginClick.bind(this);
+//         this.handleLogoutClick = this.handleLogoutClick.bind(this);
+//         this.state = {isLoggedIn: false};
+//     }
+//
+//     handleLoginClick() {
+//         this.setState({isLoggedIn: true});
+//     }
+//
+//     handleLogoutClick() {
+//         this.setState({isLoggedIn: false});
+//     }
+//
+//     render() {
+//         // @ts-ignore
+//         const isLoggedIn = this.state.isLoggedIn;
+//         let button;
+//
+//         if (isLoggedIn) {
+//             button = <LogoutButton onClick={this.handleLogoutClick} />;
+//         } else {
+//             button = <LoginButton onClick={this.handleLoginClick} />;
+//         }
+//
+//
+//         return (
+//             <div>
+//                 <Greeting isLoggedIn={isLoggedIn} />
+//                 {button}
+//             </div>
+//         );
+//     }
+// }
+//
+// function UserGreeting(props:any) {
+//     return <h1>Welcome back!</h1>;
+// }
+//
+// function GuestGreeting(props: any) {
+//     return <h1>Please sign up.</h1>;
+// }
+//
+// function Greeting(props: { isLoggedIn: any; }) {
+//     const isLoggedIn = props.isLoggedIn;
+//     if (isLoggedIn) {
+//         return <UserGreeting />;
+//     }
+//     return <GuestGreeting />;
+// }
+//
+// function LoginButton(props:any) {
+//     return (
+//         <button onClick={props.onClick}>
+//             Login
+//         </button>
+//     );
+// }
+//
+// function LogoutButton(props:any) {
+//     return (
+//         <button onClick={props.onClick}>
+//             Logout
+//         </button>
+//     );
+// }
+//
+// // @ts-ignore
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(<LoginControl />);
 
 export {};

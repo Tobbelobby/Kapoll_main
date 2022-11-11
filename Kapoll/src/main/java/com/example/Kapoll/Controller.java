@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.json.Json;
+import java.net.URLDecoder;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -63,6 +64,11 @@ public class Controller {
     @GetMapping("/api/Kapoller")
     List<Kapoller> GetAllKapollers() {
         return kapollerDAO.getAll();
+    }
+
+    @GetMapping("/api/Kapoller/check/{username}")
+    boolean getTrue(@ParameterObject @PathVariable String username) {
+        return kapollerDAO.getByUserName(username);
     }
 
     @GetMapping("/api/Kapoller/{id}")
@@ -119,7 +125,6 @@ public class Controller {
     @PostMapping("/api/Poll")
     void newPoll(@ParameterObject @RequestBody Poll newPoll) {
         pollDAO.addAndSave(newPoll);
-        rabbitTemplate.convertAndSend( "","Poll",newPoll.toString());
 
     }
     @CrossOrigin(origins="http://localhost:3000")
@@ -162,7 +167,7 @@ public class Controller {
     @PostMapping("/api/PollResult")
     void newPollRes(@ParameterObject @RequestBody Poll_result newPollRes) {
         pollResDAO.addAndSave(newPollRes);
-        rabbitTemplate.convertAndSend( "","PollResults",newPollRes.toString());
+        rabbitTemplate.convertAndSend( "","PollResults",newPollRes);
 
     }
 
