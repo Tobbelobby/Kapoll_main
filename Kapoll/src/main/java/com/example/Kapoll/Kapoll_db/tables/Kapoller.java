@@ -16,11 +16,12 @@ public class Kapoller {
     private String firstName;
     private String lastName;
     private String userName;
-    private String password;
+    //private String password;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Poll> polls;
+
 
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
@@ -48,13 +49,13 @@ public class Kapoller {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    //public String getPassword() {
+    //    return password;
+    //}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    //public void setPassword(String password) {
+    //    this.password = password;
+    //}
 
     public Set<Poll> getPolls() {
         return polls;
@@ -84,7 +85,7 @@ public class Kapoller {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
+                //", password='" + password + '\'' +
                 ", polls=" + polls +
                 '}';
     }

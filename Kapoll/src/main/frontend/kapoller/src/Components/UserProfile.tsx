@@ -30,19 +30,15 @@ export default function UserProfile(){
     }
 
     return(
-        <><Card>
-            <Card.Body>
-                <h2 className="text-center mb-4">currentUser email</h2>
-                <h1 className="text-center mb-4 profilePicture">profile-picture</h1>
-                <img src={pp}></img>
-                <Form>
-                    <Nav.Link><Button className="w-100 myProfileButton">My Polls</Button></Nav.Link>
-                    <Button className="w-100 myProfileButton" onClick={LogOutWithGoogle}>Logout</Button>
-                </Form>
-            </Card.Body>
-        </Card>
-        </>
-    )
+        <div>
+            <h2 className="text-center mb-4">currentUser displayname</h2>
+            <img src={pp} alt={"Profile-picture"} width="200px"></img>
+            <Form>
+                <Nav.Link><Button className="w-100 myProfileButton">My Polls</Button></Nav.Link>
+                <Button className="w-100 myProfileButton" onClick={LogOutWithGoogle}>Logout</Button>
+            </Form>
+        </div>
+    );
 }
 
 export {};

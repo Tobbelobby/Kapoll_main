@@ -28,7 +28,7 @@ public class Main {
         user1.setFirstName("Winnie");
         user1.setLastName("The Pooh");
         user1.setUserName("The mighty bear");
-        user1.setPassword("Honey123");
+        //user1.setPassword("Honey123");
 
         Poll poll = new Poll();
         poll.setQuestion("Is honey good?");
@@ -59,11 +59,5 @@ public class Main {
         em.close();
         factory.close();
 
-
-
-
-
-
-        // TODO: Persist object world corresponding to the domain model of experiment 2.
     }
 }

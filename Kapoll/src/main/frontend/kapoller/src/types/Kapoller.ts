@@ -1,9 +1,9 @@
 import PollData from "./Poll";
 
 export default interface KapollerData {
-    id?: number | null,
-    firstName: string,
-    lastName: string,
+    id: string | null,
+    firstName: string | null,
+    lastName: string | null,
     userName: string,
     polls?: Array<PollData>
 }

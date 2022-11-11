@@ -34,6 +34,7 @@ const AddPoll: React.FC = () => {
                     time: response.data.time
                 });
                 setSubmitted(true);
+                console.log("Created pooll");
                 console.log(response.data);
             })
             .catch((e: Error) => {

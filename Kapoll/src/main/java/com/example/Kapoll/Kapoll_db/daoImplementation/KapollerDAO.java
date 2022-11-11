@@ -5,6 +5,7 @@ import com.example.Kapoll.Kapoll_db.tables.Poll;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +27,6 @@ public class KapollerDAO extends MainImplementation{
     private PollDAO pollDAO;
 
 
-
     public Kapoller update(Kapoller kapoller) throws Exception {
         try {
             if (kapoller.getId() == null)
@@ -45,9 +45,9 @@ public class KapollerDAO extends MainImplementation{
                 updatedKapoller.setLastName(kapoller.getLastName());
             }
 
-            if (kapoller.getPassword() != null) {
-                updatedKapoller.setPassword(kapoller.getPassword());
-            }
+            //if (kapoller.getPassword() != null) {
+            //    updatedKapoller.setPassword(kapoller.getPassword());
+            //}
 
             if (kapoller.getUserName() != null) {
                 updatedKapoller.setUserName(kapoller.getUserName());
@@ -79,6 +79,11 @@ public class KapollerDAO extends MainImplementation{
     public Kapoller get(Long id) {
         return (em.find(Kapoller.class, id));
     }
+    public Kapoller getByUserName(String userName){
+        Query query = em.createQuery("SELECT e FROM Kapoller e WHERE e.userName = ?1").setParameter(1,userName);
+        //if (query.getLength() == 0)
+        return (em.find(Kapoller.class, java.net.URLDecoder.decode(userName, StandardCharsets.UTF_8)));
+    }
 
     @Override
     public List<Kapoller> getAll() {
@@ -94,12 +99,10 @@ public class KapollerDAO extends MainImplementation{
     }
     @Override
     public boolean exist(Long id) {
-        if (!(get(id) == (null))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+        return (!(get(id) == (null)));}
 
+    public boolean existByUName(String userName){
+        return (!(getByUserName(userName)==(null)));
+    }
 
 }

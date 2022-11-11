@@ -53,6 +53,13 @@ public class Controller {
     //public Controller(){}
 
     //////////////////////// KAPOLLER
+
+    //FIX: encode/decode url
+    @GetMapping("/api/Kapoller/check/{uName}")
+    Boolean AccountExists(@ParameterObject @PathVariable String uName){
+        return kapollerDAO.existByUName(uName);
+    }
+
     @GetMapping("/api/Kapoller")
     List<Kapoller> GetAllKapollers() {
         return kapollerDAO.getAll();
@@ -67,7 +74,6 @@ public class Controller {
         }
     }
 
-    //FIX! test
     @PutMapping("/api/Kapoller/{id}")
     void updateKapoller(@ParameterObject @RequestBody Kapoller newKapoller, @PathVariable Long id) throws Exception {
         if (kapollerDAO.exist(id)) {
@@ -83,8 +89,6 @@ public class Controller {
     public void newKapoller(@ParameterObject @RequestBody Kapoller newKapoller) {
         kapollerDAO.addAndSave(newKapoller);
     }
-
-
 
 
     @DeleteMapping("/api/Kapoller/{id}")
