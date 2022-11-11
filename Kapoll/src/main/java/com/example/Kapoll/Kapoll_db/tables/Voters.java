@@ -11,7 +11,6 @@ public class Voters {
 
     private int vote;
 
-
     public Long getVoter_id() {
         return voter_id;
     }
