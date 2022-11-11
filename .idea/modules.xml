@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Kapoll/Kapoll.iml" filepath="$PROJECT_DIR$/Kapoll/Kapoll.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Kapoll_main.iml" filepath="$PROJECT_DIR$/.idea/Kapoll_main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mongodb/mongodb.iml" filepath="$PROJECT_DIR$/mongodb/mongodb.iml" />
     </modules>
   </component>
 </project>
