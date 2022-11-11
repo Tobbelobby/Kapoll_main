@@ -79,12 +79,12 @@ public class KapollerDAO extends MainImplementation{
     public Kapoller get(Long id) {
         return (em.find(Kapoller.class, id));
     }
-    public Kapoller getByUserName(String userName){
-        Query query = em.createQuery("SELECT e FROM Kapoller e WHERE e.userName = ?1").setParameter(1,userName);
-        //if (query.getLength() == 0)
-        return (em.find(Kapoller.class, java.net.URLDecoder.decode(userName, StandardCharsets.UTF_8)));
-    }
 
+    public boolean existsAccount(String userName){
+        Query query = em.createQuery("SELECT e FROM Kapoller e WHERE e.userName  = ?1 ").setParameter(1, userName);
+        List list = query.getResultList();
+        return list.size()>0;
+    }
     @Override
     public List<Kapoller> getAll() {
         Query query = em.createQuery("SELECT e FROM Kapoller e");
@@ -101,8 +101,5 @@ public class KapollerDAO extends MainImplementation{
     public boolean exist(Long id) {
         return (!(get(id) == (null)));}
 
-    public boolean existByUName(String userName){
-        return (!(getByUserName(userName)==(null)));
-    }
 
 }

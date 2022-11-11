@@ -58,7 +58,7 @@ public class Controller {
     //FIX: encode/decode url
     @GetMapping("/api/Kapoller/check/{uName}")
     Boolean AccountExists(@ParameterObject @PathVariable String uName){
-        return kapollerDAO.existByUName(uName);
+        return kapollerDAO.existsAccount(uName);
     }
 
     @GetMapping("/api/Kapoller")
@@ -66,10 +66,7 @@ public class Controller {
         return kapollerDAO.getAll();
     }
 
-    @GetMapping("/api/Kapoller/check/{username}")
-    boolean getTrue(@ParameterObject @PathVariable String username) {
-        return kapollerDAO.getByUserName(username);
-    }
+
 
     @GetMapping("/api/Kapoller/{id}")
     Kapoller GetKapoller(@ParameterObject @PathVariable Long id) {

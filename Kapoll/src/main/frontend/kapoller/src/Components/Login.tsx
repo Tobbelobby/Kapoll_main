@@ -9,6 +9,7 @@ import PollData from "../types/Poll";
 import PollService from "../services/PollService";
 import KapollerService from "../services/KapollerService";
 import KapollerData from "../types/Kapoller";
+import kapollerService from "../services/KapollerService";
 
 export default function Login() {
 
@@ -34,7 +35,7 @@ export default function Login() {
         navigate(path);
     }
     const logInGoogle = () =>{
-        auth.signInWithPopup(provider).then(function (result) {
+        auth.signInWithPopup(provider).then(async function (result) {
             // This gives you a Google Access Token.
             //const token = result.credential.accessToken;
 
@@ -47,13 +48,18 @@ export default function Login() {
             // The signed-in user info.
             const user = result.user;
             console.log(user);
-            newKapoller();
+            if (user) {
+                if (await KapollerService.existsAccount(user.email)) {
+                    saveKapoller(user);
+                }
+            }
             routeChange()
 
         });
     }
 
     const initialKapoller = {
+        id: "",
         firstName: "",
         lastName: "",
         userName: ""
@@ -66,11 +72,13 @@ export default function Login() {
         setKapoller({...kapoller, [name]: value});
     };
 
-    const saveKapoller = () => {
-        var data = {
-            firstName: kapoller.firstName,
-            lastName: kapoller.lastName,
-            userName: kapoller.userName
+    const saveKapoller = (user: firebase.User) => {
+        console.log("save kapoller()");
+        var data:KapollerData = {
+            id: user.uid,
+            firstName: user.displayName?.split(" ")[0],
+            lastName: user.displayName?.split(" ")[1],
+            userName: user.email
         };
 
         KapollerService.create(data)
@@ -79,6 +87,7 @@ export default function Login() {
                 response.header("Access-Control-Allow-Origin", "*");
                 response.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
                 setKapoller({
+                    id: response.data.id,
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
                     userName: response.data.userName
@@ -99,15 +108,13 @@ export default function Login() {
 
 
     return (
-        <><Card>
-            <Card.Body>
-                <h2 className="text-center mb-4">Welcome to Kapoll</h2>
-                <Form>
-                    <Button className="w-100" onClick={logInGoogle} >Login with google</Button>
-                </Form>
-            </Card.Body>
-        </Card>
-        </>
+        <div>
+            <h2 className="text-center mb-4">Welcome to Kapoll</h2>
+            <Form>
+                <Button className="w-100" onClick={logInGoogle} >Login with google</Button>
+            </Form>
+
+        </div>
     );
 }
 
