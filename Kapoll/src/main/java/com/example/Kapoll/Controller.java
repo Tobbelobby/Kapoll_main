@@ -36,13 +36,13 @@ public class Controller {
     private PollDAO pollDAO = new PollDAO();
     private PollResDAO pollResDAO = new PollResDAO();
     private VoterDAO voterDAO = new VoterDAO();
-/*
-    private final RabbitTemplate rabbitTemplate;
 
+    private final RabbitTemplate rabbitTemplate;
 
     public Controller(RabbitTemplate rabbitTemplate){
         this.rabbitTemplate = rabbitTemplate;
-    }*/
+    }
+
     public static boolean isNumeric(String str) {
         return str != null && str.matches("[-+]?\\d*\\.?\\d+");
     }
@@ -120,7 +120,6 @@ public class Controller {
     @PostMapping("/api/Poll")
     void newPoll(@ParameterObject @RequestBody Poll newPoll) {
         pollDAO.addAndSave(newPoll);
-        //rabbitTemplate.convertAndSend( "","Poll",newPoll.toString());
 
     }
     @CrossOrigin(origins="http://localhost:3000")
@@ -163,7 +162,7 @@ public class Controller {
     @PostMapping("/api/PollResult")
     void newPollRes(@ParameterObject @RequestBody Poll_result newPollRes) {
         pollResDAO.addAndSave(newPollRes);
-        //rabbitTemplate.convertAndSend( "","PollResults",newPollRes.toString());
+        rabbitTemplate.convertAndSend( "","PollResults",newPollRes);
 
     }
 
