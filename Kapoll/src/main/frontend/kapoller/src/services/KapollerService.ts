@@ -15,7 +15,7 @@ const existsAccount = async (data: string | null) =>{
 
 const url = "http://localhost:8080/api"
 const create = async (data: KapollerData) => {
-    return await fetch(`${url}Kapoller`, {
+    return await fetch(`${url}/Kapoller`, {
         method: "POST",
         headers: {'Content-type': 'application/json', "Access-Control-Allow-Headers" : "Content-Type", 'Access-Control-Allow-Origin': '*', "Access-Control-Allow-Methods": "OPTIONS,POST, PUT,GET"},
         body: JSON.stringify(data)

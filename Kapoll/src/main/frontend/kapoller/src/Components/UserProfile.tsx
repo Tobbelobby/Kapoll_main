@@ -1,9 +1,13 @@
 import React, {useEffect, useRef} from 'react'
-import {Form, Button, Nav, Card} from 'react-bootstrap'
 import {auth} from "../firebase";
 import { useNavigate,BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import "../App.css";
+import "../styles/PollOnline.css"
+//import {Form, Button, Nav, Card} from 'react-bootstrap'
+
 import pp from './img_1.png';
+
 
 
 
@@ -16,7 +20,7 @@ export default function UserProfile(){
             console.log('navigating to profile')
             navigate('/myProfile')
         }
-        if (!authToken) {
+        else {
             console.log('navigating to login because authtoken is false')
             navigate('/login')
         }
@@ -38,8 +42,9 @@ export default function UserProfile(){
             //navigate('/Signup')
             // Sign-out successful.
             routeChange();
-        }).catch((error) => {
+        }).catch((e:Error) => {
             // An error happened.
+            console.log(e);
         });
 
     }
@@ -48,10 +53,10 @@ export default function UserProfile(){
         <div>
             <h2 className="text-center mb-4">currentUser displayname</h2>
             <img src={pp} alt={"Profile-picture"} width="200px"></img>
-            <Form>
-                <Nav.Link><Button className="w-100 myProfileButton">My Polls</Button></Nav.Link>
-                <Button className="w-100 myProfileButton" onClick={LogOutWithGoogle}>Logout</Button>
-            </Form>
+            <div>
+                <div><button className={"w-100 myProfileButton"}>My Polls</button></div>
+                <button className={"w-100 myProfileButton"} onClick={LogOutWithGoogle}>Logout</button>
+            </div>
         </div>
     );
 }
