@@ -1,18 +1,21 @@
 package com.example.mongodb.Service;
-
 import com.example.mongodb.Doucument.PollResult;
 import com.example.mongodb.Repository.MongodbRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 
 
 @Service
 public class RabbitMongoListener {
+
+    private PollResult pollResultdb;
 
 
     @Autowired
@@ -20,15 +23,14 @@ public class RabbitMongoListener {
 
     @RabbitListener(queues = {"PollResults"})
     public void messageReceiver(String pollResult) throws JSONException {
-        System.out.println("Received: " + pollResult);
-        JSONObject resultObject= new JSONObject(pollResult );
         System.out.println(pollResult);
-        int yesVote = resultObject.getInt("yesVote");
-        int noVote = resultObject.getInt("noVote");
-        Long utilDate = resultObject.getLong("utilDate");
-        Long id = resultObject.getLong("id");
-        System.out.println(yesVote);
-        mongoRepository.save(new PollResult(id,utilDate,yesVote,noVote));
+        JSONObject resultObject= new JSONObject(pollResult);
+        System.out.println(resultObject);
+        JSONArray resultFromPoll = resultObject.getJSONArray("poll_results");
+        System.out.println(resultFromPoll.get(0));
+        mongoRepository.save(new PollResult(resultObject));
+
+
 
     }
 }
