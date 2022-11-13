@@ -32,7 +32,7 @@ const App: React.FC = () => {
                     </li>
                     <li className="nav-item">
                         <Link to={"/myProfile"} className="nav-link">
-                            My user-profile
+                            My profile
                         </Link>
                     </li>
                     <li className="nav-item">

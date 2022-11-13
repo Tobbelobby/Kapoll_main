@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.json.Json;
+import java.net.URLDecoder;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -48,10 +49,19 @@ public class Controller {
     //public Controller(){}
 
     //////////////////////// KAPOLLER
+
+    //FIX: encode/decode url
+    @GetMapping("/api/Kapoller/check/{uName}")
+    Boolean AccountExists(@ParameterObject @PathVariable String uName){
+        return kapollerDAO.existsAccount(uName);
+    }
+
     @GetMapping("/api/Kapoller")
     List<Kapoller> GetAllKapollers() {
         return kapollerDAO.getAll();
     }
+
+
 
     @GetMapping("/api/Kapoller/{id}")
     Kapoller GetKapoller(@ParameterObject @PathVariable Long id) {
@@ -62,7 +72,6 @@ public class Controller {
         }
     }
 
-    //FIX! test
     @PutMapping("/api/Kapoller/{id}")
     void updateKapoller(@ParameterObject @RequestBody Kapoller newKapoller, @PathVariable Long id) throws Exception {
         if (kapollerDAO.exist(id)) {
@@ -78,8 +87,6 @@ public class Controller {
     public void newKapoller(@ParameterObject @RequestBody Kapoller newKapoller) {
         kapollerDAO.addAndSave(newKapoller);
     }
-
-
 
 
     @DeleteMapping("/api/Kapoller/{id}")
