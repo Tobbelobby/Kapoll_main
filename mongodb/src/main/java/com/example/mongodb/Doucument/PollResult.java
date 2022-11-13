@@ -1,6 +1,8 @@
 package com.example.mongodb.Doucument;
 
 
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,35 +10,28 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class PollResult {
 
     @Id
-    private Long id;
+    String id;
 
-    private int noVote;
-    private int yesVote;
-    private Long utilDate;
+    private JSONObject poll;
 
-   // private Long pollId;
+
+
 
 
     public PollResult(){}
 
-    public PollResult(Long id, Long utilDate, int noVote, int yesVote){
-        this.id = id;
-        this.utilDate = utilDate;
-        this.yesVote = yesVote;
-        this.noVote = noVote;
-        //this.pollId = pollId;
+    public PollResult(JSONObject poll){
+        this.poll = poll;
+
 
 
     }
 
-
     @Override
     public String toString() {
         return "PollResult{" +
-                "id='" + id + '\'' +
-                ", utilDate='" + utilDate + '\'' +
-                ", noVote=" + noVote +
-                ", yesVote=" + yesVote +
+                "id=" + id +
+                ", poll=" + poll +
                 '}';
     }
 }
