@@ -1,4 +1,5 @@
 package com.example.Kapoll;
+import com.example.Kapoll.Configuration.RabbitConfig;
 import com.example.Kapoll.Kapoll_db.daoImplementation.KapollerDAO;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,8 +10,6 @@ import javax.persistence.Embeddable;
 public class KapollApplication {
 
 	static KapollerDAO dao = new KapollerDAO();
-
-
 
 	public static void main(String[] args) {
 		SpringApplication.run(KapollApplication.class, args);
