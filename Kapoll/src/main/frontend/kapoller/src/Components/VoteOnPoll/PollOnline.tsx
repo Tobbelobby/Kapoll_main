@@ -6,6 +6,7 @@ import PollResultData from "../../types/PollResult";
 import PollService from "../../services/PollService";
 import PostToDweet from "./SendToDweet";
 import PollData from "../../types/Poll";
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -48,8 +49,10 @@ const PollOnline: React.FC<PollOnlineProps> = (props: PollOnlineProps) => {
         })
             .catch((e: Error) => {
                 console.log(e)
-            });;
+            });
         //PostToDweet.sendResults(props)
+        let navigate = useNavigate();
+        navigate("/PollResult");
     }
     return (
         <div id = "container" className={"PollOnlineContainer"}>
