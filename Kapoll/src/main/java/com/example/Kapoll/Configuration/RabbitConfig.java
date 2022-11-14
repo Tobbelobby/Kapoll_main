@@ -18,9 +18,10 @@ public class RabbitConfig {
     static final String queueName = "PollResults";
 
     @Bean
-    Queue queue() {
+    public Queue queue() {
         return new Queue(queueName);
     }
+
 
     @Bean
     public Jackson2JsonMessageConverter converter() {
