@@ -2,6 +2,7 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import PollService from "../../services/PollService";
 import PollData from "../../types/Poll";
 import {Link} from "react-router-dom";
+import KapollerService from "../../services/KapollerService";
 
 const PollsList: React.FC = () => {
     const [polls, setPolls] = useState<Array<PollData>>([]);
@@ -14,14 +15,17 @@ const PollsList: React.FC = () => {
 
 
     const retrievePolls = () => {
-        PollService.getAll()
+        let id: string |null = sessionStorage.getItem('userId')
+        if (id) {
+            KapollerService.get(id)
             .then((response: any) => {
-                setPolls(response.data);
-                console.log(response.data);
+                console.log(response)
+                setPolls(response.data.polls);
+                console.log(response.data.polls);
             })
             .catch((e: Error) => {
                 console.log(e);
-            });
+            });}
     };
 
     const refreshList = () => {

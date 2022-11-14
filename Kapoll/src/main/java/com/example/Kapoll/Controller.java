@@ -56,6 +56,10 @@ public class Controller {
         return kapollerDAO.existsAccount(uName);
     }
 
+    @GetMapping("/api/Kapoller/username/{username}")
+    Kapoller getUserByUsername(@ParameterObject @PathVariable String username)  {
+        return GetKapoller(kapollerDAO.getKapollerIdByUsername(username));}
+
     @GetMapping("/api/Kapoller")
     List<Kapoller> GetAllKapollers() {
         return kapollerDAO.getAll();
@@ -115,8 +119,9 @@ public class Controller {
     }
     @CrossOrigin(origins="http://localhost:3000")
     @PostMapping("/api/Poll")
-    void newPoll(@ParameterObject @RequestBody Poll newPoll) {
+    Poll newPoll(@ParameterObject @RequestBody Poll newPoll) {
         pollDAO.addAndSave(newPoll);
+        return newPoll;
 
     }
     @CrossOrigin(origins="http://localhost:3000")

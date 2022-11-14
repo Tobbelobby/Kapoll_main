@@ -1,15 +1,21 @@
 import http from "../http-common";
 import KapollerData from "../types/Kapoller";
 import PollData from "../types/Poll";
+import PollResultData from "../types/PollResult";
 
 const getAll = () => {
     return http.get<Array<KapollerData>>("/Kapoller")
 };
 
-const get = (id: number) => {
+const get = (id: string) => {
     return http.get<KapollerData>(`/Kapoller/${id}`);
 };
-const existsAccount = async (data: string | null) =>{
+
+const getUserByUsername = async (username: string) => {
+    return http.get<KapollerData>(`${url}/Kapoller/username/${username}`);
+}
+
+const existsAccount = async (data: string) =>{
     return (http.get<KapollerData>(`/Kapoller/check/${data}`));
 }
 
@@ -26,6 +32,18 @@ const update = (id: number, data: KapollerData) => {
     return http.put<any>(`/Kapoller/${id}`, data);
 };
 
+const addPoll = async (id: string, data: Array<PollData>) => {
+    const pollsToAdd = {
+        polls : data
+    }
+    console.log(JSON.stringify(pollsToAdd))
+    return await fetch(`${url}/Poll/${id}`, {
+        method: 'PUT',
+        headers: {'Content-type': 'application/json', "Access-Control-Allow-Headers" : "Content-Type", 'Access-Control-Allow-Origin': '*', "Access-Control-Allow-Methods": "OPTIONS,POST, PUT,GET"},
+        body: JSON.stringify(pollsToAdd)
+    })
+}
+
 const remove = (id: number) => {
     return http.delete<any>(`/Kapoller/${id}`);
 };
@@ -36,7 +54,9 @@ const KapollerService = {
     create,
     update,
     remove,
-    existsAccount
+    existsAccount,
+    addPoll,
+    getUserByUsername
 };
 
 export default KapollerService;

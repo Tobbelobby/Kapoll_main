@@ -1,6 +1,7 @@
 import React, {useState, ChangeEvent} from "react";
 import PollService from "../../services/PollService";
 import PollData from "../../types/Poll";
+import KapollerService from "../../services/KapollerService";
 
 const AddPoll: React.FC = () => {
     const initialPoll = {
@@ -8,6 +9,8 @@ const AddPoll: React.FC = () => {
         question: "",
         time: 0
     };
+    let id: string | null = sessionStorage.getItem('userId')
+    console.log('in create poll' + id)
     const [poll, setPoll] = useState<PollData>(initialPoll)
     const [submitted, setSubmitted] = useState<boolean>(false);
 
@@ -16,26 +19,33 @@ const AddPoll: React.FC = () => {
         setPoll({...poll, [name]: value});
     };
 
-    const savePoll = () => {
-        var data = {
+    const savePoll = async () => {
+        console.log(sessionStorage.getItem('userId'))
+        let data = {
             title: poll.title,
             question: poll.question,
             time: poll.time
         };
 
-        PollService.create(data)
-            .then((response: any) => {
-                response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-                response.header("Access-Control-Allow-Origin", "*");
-                response.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
+        await PollService.create(data)
+            .then(async (response: any) => {
+                console.log(response);
                 setPoll({
+                    id: response.data.id,
                     title: response.data.title,
                     question: response.data.question,
-                    time: response.data.time
+                    time:response.data.time
                 });
-                setSubmitted(true);
+                console.log(poll)
+
                 console.log("Created pooll");
                 console.log(response.data);
+                if (id) {
+                    KapollerService.addPoll(id, [poll])
+                        .then((response) => console.log('success'))
+                        .catch((e: Error) => console.log(e));
+                    setSubmitted(true);
+                }
             })
             .catch((e: Error) => {
                 console.log(e)

@@ -52,10 +52,15 @@ function Login() {
             // The signed-in user info.
             const user = result.user;
             console.log(user);
-            if (user) {
+            if (user && user.email) {
                 //FIX: does not work!!!
                 if (await KapollerService.existsAccount(user.email)) {
-                    saveKapoller(user);
+                    const id: any = await KapollerService.getUserByUsername(user.email).then(response => response.data.id)
+                    sessionStorage.setItem('userId', id)
+                    console.log(sessionStorage.getItem('userId'))
+                }
+                else {
+                    saveKapoller(user)
                 }
             }
             routeChange()
