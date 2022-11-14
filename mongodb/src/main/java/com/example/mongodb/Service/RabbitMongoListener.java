@@ -15,20 +15,20 @@ import java.util.Arrays;
 @Service
 public class RabbitMongoListener {
 
-    private PollResult pollResultdb;
-
 
     @Autowired
     private MongodbRepository mongoRepository;
 
     @RabbitListener(queues = {"PollResults"})
     public void messageReceiver(String pollResult) throws JSONException {
-        System.out.println(pollResult);
         JSONObject resultObject= new JSONObject(pollResult);
         System.out.println(resultObject);
-        JSONArray resultFromPoll = resultObject.getJSONArray("poll_results");
-        System.out.println(resultFromPoll.get(0));
-        mongoRepository.save(new PollResult(resultObject));
+        long kapollerId = resultObject.getLong("id");
+        JSONObject resultArray = resultObject.getJSONArray("poll_results").getJSONObject(0);
+        int yesVote = resultArray.getInt("yesVote");
+        int noVote = resultArray.getInt("noVote");
+        long pollDate = resultArray.getLong("utilDate");
+        mongoRepository.save(new PollResult(kapollerId,yesVote,noVote,pollDate));
 
 
 
