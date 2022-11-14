@@ -33,11 +33,11 @@ public class Controller {
     private PollResDAO pollResDAO = new PollResDAO();
     private VoterDAO voterDAO = new VoterDAO();
 
-    private final RabbitTemplate rabbitTemplate;
+    //private final RabbitTemplate rabbitTemplate;
 
-    public Controller(RabbitTemplate rabbitTemplate){
-        this.rabbitTemplate = rabbitTemplate;
-    }
+   // public Controller(RabbitTemplate rabbitTemplate){
+   //     this.rabbitTemplate = rabbitTemplate;
+    //}
 
     public static boolean isNumeric(String str) {
         return str != null && str.matches("[-+]?\\d*\\.?\\d+");
@@ -51,22 +51,25 @@ public class Controller {
     //////////////////////// KAPOLLER
 
     //FIX: encode/decode url
+    @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/api/Kapoller/check/{uName}")
     Boolean AccountExists(@ParameterObject @PathVariable String uName){
         return kapollerDAO.existsAccount(uName);
     }
 
+    @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/api/Kapoller/username/{username}")
     Kapoller getUserByUsername(@ParameterObject @PathVariable String username)  {
         return GetKapoller(kapollerDAO.getKapollerIdByUsername(username));}
 
+    @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/api/Kapoller")
     List<Kapoller> GetAllKapollers() {
         return kapollerDAO.getAll();
     }
 
 
-
+    @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/api/Kapoller/{id}")
     Kapoller GetKapoller(@ParameterObject @PathVariable Long id) {
         if (kapollerDAO.exist(id)) {
@@ -75,7 +78,7 @@ public class Controller {
             throw new NotFoundException(id, "user");
         }
     }
-
+    @CrossOrigin(origins="http://localhost:3000")
     @PutMapping("/api/Kapoller/{id}")
     void updateKapoller(@ParameterObject @RequestBody Kapoller newKapoller, @PathVariable Long id) throws Exception {
         if (kapollerDAO.exist(id)) {
@@ -86,13 +89,13 @@ public class Controller {
         }
 
     }
-
+    @CrossOrigin(origins="http://localhost:3000")
     @PostMapping("/api/Kapoller")
     public void newKapoller(@ParameterObject @RequestBody Kapoller newKapoller) {
         kapollerDAO.addAndSave(newKapoller);
     }
 
-
+    @CrossOrigin(origins="http://localhost:3000")
     @DeleteMapping("/api/Kapoller/{id}")
     public void deleteKapoller(@ParameterObject @PathVariable Long id) {
         if (kapollerDAO.exist(id)) {
@@ -103,12 +106,13 @@ public class Controller {
 
     }
 
-    //////////////////////// POLL
+    @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/api/Poll")
     List<Poll> GetAllPolls() {
         return pollDAO.getAll();
     }
 
+    @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/api/Poll/{id}")
     Poll GetPoll(@ParameterObject @PathVariable Long id) {
         if (pollDAO.exist(id)) {
@@ -130,10 +134,10 @@ public class Controller {
         if (pollDAO.exist(id)) {
             newPoll.setId(id);
             pollDAO.update(newPoll);
-            if(newPoll.getPoll_results() != null){
-                rabbitTemplate.convertAndSend( "","PollResults",newPoll);
-            }
-            //kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
+//            if(newPoll.getPoll_results() != null){
+//                rabbitTemplate.convertAndSend( "","PollResults",newPoll);
+//            }
+            kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
         } else {
             throw new NotFoundException(id, "poll");
         }

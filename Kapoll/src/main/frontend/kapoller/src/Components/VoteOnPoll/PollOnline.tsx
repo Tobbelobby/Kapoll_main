@@ -12,6 +12,7 @@ import {useNavigate} from "react-router-dom";
 
 const PollOnline: React.FC<PollOnlineProps> = (props: PollOnlineProps) => {
     console.log(props.yesVotes)
+    let navigate = useNavigate();
     const [yes, setYes] = useState<number>(0)
     const [no, setNo] = useState<number>(0)
     const [pollResult, setPollResult] = useState<PollResultData>()
@@ -40,22 +41,15 @@ const PollOnline: React.FC<PollOnlineProps> = (props: PollOnlineProps) => {
         const data:Array<PollResultData> = [resultData]
 
         PollService.updateResults(props.pollId, data).then((response: any) => {
-            setPollResult({
-                pollId: response.data.pollId,
-                noVote: response.data.noVote,
-                yesVote: response.data.yesVote,
-                utilDate: response.data.utilDate
-            });
             setSubmitted(true);
         })
             .catch((e: Error) => {
                 console.log(e)
             });
-        //PostToDweet.sendResults(props)
-        let navigate = useNavigate();
-        navigate("/PollResult");
+        PostToDweet.sendResults(props)
+
+        //navigate("/PollResult");
     }
-    {console.log("yes now:"+yes)}
     return (
         <div id = "container" className={"PollOnlineContainer"}>
             <div id={"resultsAndTimeLeft"} className={"resultsAndTimeContainer"}>

@@ -5,6 +5,5 @@ export default interface PollData {
     title: string,
     question: string,
     time: number,
-    pollResults?: Array<PollResultData>,
-    pollOwnerID?: string
+    pollResults?: Array<PollResultData>
 }

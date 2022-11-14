@@ -54,7 +54,8 @@ function Login() {
             console.log(user);
             if (user && user.email) {
                 //FIX: does not work!!!
-                if (await KapollerService.existsAccount(user.email)) {
+                if (await KapollerService.existsAccount(user.email).then((response:any)=>response.data)) {
+                    console.log("in here")
                     const id: any = await KapollerService.getUserByUsername(user.email).then(response => response.data.id)
                     sessionStorage.setItem('userId', id)
                     console.log(sessionStorage.getItem('userId'))
@@ -90,7 +91,7 @@ function Login() {
         };
 
         KapollerService.create(data)
-            .then((response: any) => {
+            .then(async (response: any) => {
                 response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
                 response.header("Access-Control-Allow-Origin", "*");
                 response.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
@@ -101,6 +102,9 @@ function Login() {
                     userName: response.data.userName
                 });
                 setSubmitted(true);
+                if (kapoller.userName) {
+                const id: any = await KapollerService.getUserByUsername(kapoller.userName).then(response => response.data.id)
+                sessionStorage.setItem('userId', id)}
                 console.log(response.data.id);
             })
             .catch((e: Error) => {

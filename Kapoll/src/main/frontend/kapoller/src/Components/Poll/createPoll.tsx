@@ -9,43 +9,39 @@ const AddPoll: React.FC = () => {
         question: "",
         time: 0
     };
-    let id: string | null = sessionStorage.getItem('userId')
-    console.log('in create poll' + id)
+    let userId: string | null = sessionStorage.getItem('userId')
+    console.log('in create poll ' + userId)
     const [poll, setPoll] = useState<PollData>(initialPoll)
     const [submitted, setSubmitted] = useState<boolean>(false);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
-        setPoll({...poll, [name]: value});
+        setPoll({id:0,...poll, [name]: value});
     };
 
-    const savePoll = async () => {
-        console.log(sessionStorage.getItem('userId'))
-        let data = {
+    const savePoll = () => {
+        var data = {
             title: poll.title,
             question: poll.question,
             time: poll.time
         };
 
-        await PollService.create(data)
-            .then(async (response: any) => {
-                console.log(response);
-                setPoll({
-                    id: response.data.id,
-                    title: response.data.title,
-                    question: response.data.question,
-                    time:response.data.time
-                });
-                console.log(poll)
-
-                console.log("Created pooll");
-                console.log(response.data);
-                if (id) {
-                    KapollerService.addPoll(id, [poll])
-                        .then((response) => console.log('success'))
+        PollService.create(data)
+            .then(async(response) => {
+                setSubmitted(true);
+                return response.json().then((result) => {
+                    console.log(result.id)
+                    console.log(poll)
+                    var newData:PollData = {
+                        id: result.id,
+                        title: poll.title,
+                        question: poll.question,
+                        time: poll.time}
+                    if(userId){KapollerService.addPoll(userId, [newData])
+                        .then((response) => {console.log(response.headers)})
                         .catch((e: Error) => console.log(e));
-                    setSubmitted(true);
-                }
+                        setSubmitted(true);}
+                })
             })
             .catch((e: Error) => {
                 console.log(e)
