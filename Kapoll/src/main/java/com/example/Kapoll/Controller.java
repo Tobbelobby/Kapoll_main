@@ -33,11 +33,11 @@ public class Controller {
     private PollResDAO pollResDAO = new PollResDAO();
     private VoterDAO voterDAO = new VoterDAO();
 
-    //private final RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
-   // public Controller(RabbitTemplate rabbitTemplate){
-   //     this.rabbitTemplate = rabbitTemplate;
-    //}
+    public Controller(RabbitTemplate rabbitTemplate){
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     public static boolean isNumeric(String str) {
         return str != null && str.matches("[-+]?\\d*\\.?\\d+");
@@ -134,9 +134,9 @@ public class Controller {
         if (pollDAO.exist(id)) {
             newPoll.setId(id);
             pollDAO.update(newPoll);
-//            if(newPoll.getPoll_results() != null){
-//                rabbitTemplate.convertAndSend( "","PollResults",newPoll);
-//            }
+            if(newPoll.getPoll_results() != null){
+                rabbitTemplate.convertAndSend( "","PollResults",newPoll);
+            }
             kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
         } else {
             throw new NotFoundException(id, "poll");
