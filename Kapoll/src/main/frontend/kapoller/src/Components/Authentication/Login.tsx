@@ -1,16 +1,26 @@
-import React, {ChangeEvent, useState} from 'react';
-import { useNavigate,BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "../App.css";
+import React, {ChangeEvent, useEffect, useState} from 'react';
+import { useNavigate} from "react-router-dom";
+import "../../App.css";
+import "../../styles/PollOnline.css"
 
-//import {Form, Button, Card} from 'react-bootstrap'
-import "../styles/PollOnline.css"
-
-import {auth} from "../firebase";
 import firebase from "firebase/compat/app";
-import KapollerService from "../services/KapollerService";
-import KapollerData from "../types/Kapoller";
+import KapollerService from "../../services/KapollerService";
+import KapollerData from "../../types/Kapoller";
 
-export default function Login() {
+function Login() {
+    let navigate = useNavigate();
+    useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
+        console.log('auth token is')
+        if (authToken) {
+            console.log('navigating to profile because user is already logged in')
+            navigate('/myProfile')
+        }
+        else {
+            console.log('navigating to login because authtoken is false')
+            navigate('/login')
+        }
+    },[])
 
     const config = {
         apiKey: "AIzaSyCjRtqoXz1m2_xjwI6tz5dVBTTBmTMoZSQ",
@@ -28,22 +38,17 @@ export default function Login() {
     provider.addScope('profile');
     provider.addScope('email');
 
-    let navigate = useNavigate();
     const routeChange = () =>{
         let path = `/myProfile`;
         navigate(path);
     }
     const logInGoogle = () =>{
         auth.signInWithPopup(provider).then(async function (result) {
-            // This gives you a Google Access Token.
-            //const token = result.credential.accessToken;
 
             // @ts-ignore
             const token = result.user?.refreshToken;
             if (token) {sessionStorage.setItem('Auth Token', token)};
 
-            console.log("TOKEN");
-            console.log(token);
             // The signed-in user info.
             const user = result.user;
             console.log(user);
@@ -54,7 +59,6 @@ export default function Login() {
                 }
             }
             routeChange()
-
         });
     }
 
@@ -99,12 +103,6 @@ export default function Login() {
             });
     };
 
-    //FIX not used
-    const newKapoller = () => {
-        setKapoller(initialKapoller);
-        setSubmitted(false)
-    };
-
 
     return (
         <div>
@@ -112,9 +110,8 @@ export default function Login() {
             <div>
                 <button className={"w-100 myProfileButton"} onClick={logInGoogle} >Login with google</button>
             </div>
-
         </div>
     );
 }
 
-export {};
+export default Login;

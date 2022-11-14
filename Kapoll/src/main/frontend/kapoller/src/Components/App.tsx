@@ -8,8 +8,10 @@ import Poll from "./Poll/Poll";
 import PollsList from "./Poll/PollsList";
 import PollOnline from "./VoteOnPoll/PollOnline"
 import StartPoll from "./Poll/startPoll";
-import Login from "./Login";
-import UserProfile from "./UserProfile";
+import Login from "./Authentication/Login";
+import UserProfile from "./Authentication/UserProfile";
+import ResultChart from "./Poll/ResultChart";
+import PollResult from "./VoteOnPoll/PollResult";
 
 const App: React.FC = () => {
     return (
@@ -45,13 +47,14 @@ const App: React.FC = () => {
 
             <div className="flex space_around fill">
                 <Routes>
-                    <Route path="/" element={<PollsList/>} />
-                    <Route path="/Poll" element={<PollsList/>} />
-                    <Route path="/add" element={<AddPoll/>} />
-                    <Route path="/Poll/:id" element={<Poll/>} />
+                    <Route path={"/"} element={<PollsList/>}/>
+                    <Route path={"/Poll"} element={<PollsList/>}/>
+                    <Route path={"/add"} element={<AddPoll/>}/>
+                    <Route path={"/Poll/:id"} element={<Poll/>}/>
                     <Route path={"/:id"} element={<StartPoll/>}/>
                     <Route path={"/myProfile"} element={<UserProfile/>}/>
                     <Route path={"/login"} element={<Login/>}/>
+                    <Route path={"/PollResult/:id"} element={<PollResult/>}/>
                 </Routes>
             </div>
         </div>

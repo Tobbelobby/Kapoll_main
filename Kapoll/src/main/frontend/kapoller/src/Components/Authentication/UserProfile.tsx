@@ -1,17 +1,15 @@
 import React, {useEffect, useRef} from 'react'
-import {auth} from "../firebase";
+import {auth} from "../../firebase";
 import { useNavigate,BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import "../App.css";
-import "../styles/PollOnline.css"
+import "../../App.css";
+import "../../styles/PollOnline.css"
 //import {Form, Button, Nav, Card} from 'react-bootstrap'
 
-import pp from './img_1.png';
+import pp from '../IMG/img_1.png';
 
 
-
-
-export default function UserProfile(){
+function UserProfile(){
     let navigate = useNavigate();
     useEffect(() => {
         let authToken = sessionStorage.getItem('Auth Token')
@@ -50,15 +48,15 @@ export default function UserProfile(){
     }
 
     return(
-        <div>
+        <div className="text-center mb-4">
             <h2 className="text-center mb-4">currentUser displayname</h2>
-            <img src={pp} alt={"Profile-picture"} width="200px"></img>
-            <div>
-                <div><button className={"w-100 myProfileButton"}>My Polls</button></div>
-                <button className={"w-100 myProfileButton"} onClick={LogOutWithGoogle}>Logout</button>
-            </div>
+            <img className="text-center mb-4" id={"profilePicture"} src={pp} alt={"Profile-picture"} width="200px"/>
+
+            <button className={"w-100 myProfileButton"}>My Polls</button>
+            <button className={"w-100 myProfileButton"} onClick={LogOutWithGoogle}>Logout</button>
+
         </div>
     );
 }
 
-export {};
+export default UserProfile;

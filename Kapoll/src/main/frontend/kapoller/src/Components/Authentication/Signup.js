@@ -40,7 +40,7 @@ export {};*/
 
 import React, {useRef} from 'react'
 import {Form, Button, Card} from 'react-bootstrap'
-import {signInWithGoogle} from "../firebase";
+import {signInWithGoogle} from "../../firebase";
 
 export default function Signup(){
     const emailRef = useRef()
