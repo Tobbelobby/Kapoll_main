@@ -12,26 +12,30 @@ public class PollResult {
     @Id
     String id;
 
-    private JSONObject poll;
-
-
+    private Long kapollerId;
+    private int yesVotes;
+    private int noVotes;
+    private Long pollDate;
 
 
 
     public PollResult(){}
 
-    public PollResult(JSONObject poll){
-        this.poll = poll;
-
-
-
+    public PollResult(Long kapollerId, int yesVotes, int noVotes, Long pollDate){
+        this.kapollerId = kapollerId;
+        this.yesVotes = yesVotes;
+        this.noVotes = noVotes;
+        this.pollDate = pollDate;
     }
 
     @Override
     public String toString() {
         return "PollResult{" +
-                "id=" + id +
-                ", poll=" + poll +
+                "id='" + id + '\'' +
+                ", kapollerId=" + kapollerId +
+                ", yesVotes=" + yesVotes +
+                ", noVotes=" + noVotes +
+                ", pollDate=" + pollDate +
                 '}';
     }
 }
