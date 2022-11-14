@@ -51,9 +51,8 @@ function UserProfile(){
         <div className="text-center mb-4">
             <h2 className="text-center mb-4">currentUser displayname</h2>
             <img className="text-center mb-4" id={"profilePicture"} src={pp} alt={"Profile-picture"} width="200px"/>
-
-            <button className={"w-100 myProfileButton"}>My Polls</button>
-            <button className={"w-100 myProfileButton"} onClick={LogOutWithGoogle}>Logout</button>
+            <button className={"w-100 text-center myProfileButton"}>My Polls</button>
+            <button className={"w-100 text-center myProfileButton"} onClick={LogOutWithGoogle}>Logout</button>
 
         </div>
     );

@@ -50,9 +50,12 @@ button {
     align-content: center;
     justify-content: center;
     background-color: #997272;
-    border-radius:30%;
+    /*border-radius:30%;
     height: 10vh;
-    min-width: 14vh;
+    min-width: 14vh;*/
+    border-radius:50%;
+    height: 12vh;
+    min-width: 12vh;
     border-color: transparent;
     font-style: italic;
     font-weight: 800;
@@ -102,5 +105,19 @@ button:hover {
 }
 .myProfileButton{
     margin: 10px;
+}
+
+
+.myProfileButton, #copyLink{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    background-color: #997272;
+    height: 10%;
+    transform: translateX(12%);
+}
+.myProfileButton{
+    width: 50% !important;
 }
 

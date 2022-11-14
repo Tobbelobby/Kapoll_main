@@ -104,7 +104,7 @@ const PollsList: React.FC = () => {
                         >
                             Edit
                         </Link>
-                        <button onClick={() =>  navigator.clipboard.writeText('localhost:3000/'+currentPoll.id)}>Copy Link</button>
+                        <button id={"copyLink"} onClick={() =>  navigator.clipboard.writeText('localhost:3000/'+currentPoll.id)}>Copy Link</button>
                     </div>
                 ) : (
                     <div>
