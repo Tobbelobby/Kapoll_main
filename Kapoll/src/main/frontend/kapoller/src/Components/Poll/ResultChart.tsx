@@ -20,10 +20,10 @@ const ResultCharts: React.FC = () => {
 
     const data = [
         {name:"yes",
-        votes: d.yesVotes,
+        votes: 12,
         fill:green,},
         {name:"no",
-        votes: d.noVotes,
+        votes: 4,
         fill: red,},];
 
     return (

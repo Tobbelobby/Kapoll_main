@@ -36,7 +36,7 @@ export default function Signup(){
     )
 }
 
-export {};*/
+export {};
 
 import React, {useRef} from 'react'
 import {Form, Button, Card} from 'react-bootstrap'
@@ -75,5 +75,5 @@ export default function Signup(){
         </>
     )
 }
-
+*/
 export {};

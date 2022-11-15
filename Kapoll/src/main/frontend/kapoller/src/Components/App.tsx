@@ -53,6 +53,7 @@ const App: React.FC = () => {
                     <Route path={"/Poll/:id"} element={<Poll/>}/>
                     <Route path={"/:id"} element={<StartPoll/>}/>
                     <Route path={"/myProfile"} element={<UserProfile/>}/>
+                    <Route path={"/myProfile/:id"} element={<UserProfile/>}/>
                     <Route path={"/login"} element={<Login/>}/>
                     <Route path={"/PollResult/:id"} element={<PollResult/>}/>
                 </Routes>

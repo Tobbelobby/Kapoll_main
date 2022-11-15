@@ -6,13 +6,16 @@ import "../../styles/PollOnline.css"
 import firebase from "firebase/compat/app";
 import KapollerService from "../../services/KapollerService";
 import KapollerData from "../../types/Kapoller";
+import PollOnline from "../VoteOnPoll/PollOnline";
 
 function Login() {
     let navigate = useNavigate();
     useEffect(() => {
         let authToken = sessionStorage.getItem('Auth Token')
         console.log('auth token is')
+        console.log(authToken);
         if (authToken) {
+
             console.log('navigating to profile because user is already logged in')
             navigate('/myProfile')
         }
@@ -40,8 +43,9 @@ function Login() {
 
     const routeChange = () =>{
         let path = `/myProfile`;
-        navigate(path);
+        //navigate(`/myProfile`, {state:{firstName:user.firstName,name:'sabaoon'}});
     }
+    const username = "";
     const logInGoogle = () =>{
         auth.signInWithPopup(provider).then(async function (result) {
 
@@ -51,9 +55,9 @@ function Login() {
 
             // The signed-in user info.
             const user = result.user;
+            //nonlocal username
             console.log(user);
             if (user && user.email) {
-                //FIX: does not work!!!
                 if (await KapollerService.existsAccount(user.email).then((response:any)=>response.data)) {
                     console.log("in here")
                     const id: any = await KapollerService.getUserByUsername(user.email).then(response => response.data.id)
@@ -64,7 +68,7 @@ function Login() {
                     saveKapoller(user)
                 }
             }
-            routeChange()
+            navigate(`/myProfile`, {state:{userObj:user?.displayName}});
         });
     }
 
