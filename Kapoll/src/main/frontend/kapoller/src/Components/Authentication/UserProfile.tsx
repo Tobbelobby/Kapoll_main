@@ -50,6 +50,7 @@ function UserProfile(){
     const LogOutWithGoogle = async () => {
         auth.signOut().then(() => {
             sessionStorage.removeItem('Auth Token')
+            sessionStorage.removeItem('userId')
             console.log("signed out OK")
             // Sign-out successful.
             routeChange();

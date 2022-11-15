@@ -68,7 +68,8 @@ function Login() {
                     saveKapoller(user)
                 }
             }
-            navigate(`/myProfile`, {state:{userObj:user?.displayName}});
+            //navigate(`/myProfile`, {state:{userObj:user?.displayName}});
+            navigate(`/myProfile`);
         });
     }
 
