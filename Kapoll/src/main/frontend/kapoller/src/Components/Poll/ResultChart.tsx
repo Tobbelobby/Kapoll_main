@@ -3,19 +3,19 @@ import {BarChart,Bar,ResponsiveContainer}from'recharts';
 import PollOnlineProps from"../../types/PollOnlineProps";
 import PollResultData from"../../types/PollResult";
 import {useParams} from "react-router-dom";
+import Poll from "./Poll";
+import PollResult from "../VoteOnPoll/PollResult";
 
 const green='#ACC779';
 const red='#DB6C79';
 
 
-const ResultCharts: React.FC = () => {
+const ResultCharts: (props: { yesVotes: number; noVotes: number }) => JSX.Element = (props: {yesVotes: number, noVotes: number}) => {
     const {id} = useParams();
-    const [noVotes, setNoVotes] = useState<number>(0);
-    const [yesVotes, setYesVotes] = useState<number>(0);
     const d = {
         pollId: id? id : '',
-        noVotes : noVotes,
-        yesVotes : yesVotes,
+        noVotes : props.noVotes,
+        yesVotes : props.yesVotes,
     }
 
     const data = [
