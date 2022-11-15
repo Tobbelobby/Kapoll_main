@@ -3,13 +3,11 @@ import com.example.mongodb.Doucument.PollResult;
 import com.example.mongodb.Repository.MongodbRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 
 
 @Service
