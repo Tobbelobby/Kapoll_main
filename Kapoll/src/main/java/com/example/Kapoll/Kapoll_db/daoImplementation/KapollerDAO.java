@@ -85,6 +85,16 @@ public class KapollerDAO extends MainImplementation{
         List list = query.getResultList();
         return list.size()>0;
     }
+
+    public Long getKapollerIdByUsername(String username) {
+        Long kapollerId = null;
+        Query query = em.createQuery("SELECT e.id FROM Kapoller e WHERE e.userName  = ?1 ").setParameter(1, username);
+        List list = query.getResultList();
+        if(list.size()>0) {
+            Object id = list.get(0);
+            kapollerId = (Long)(id);}
+        return kapollerId;
+    }
     @Override
     public List<Kapoller> getAll() {
         Query query = em.createQuery("SELECT e FROM Kapoller e");

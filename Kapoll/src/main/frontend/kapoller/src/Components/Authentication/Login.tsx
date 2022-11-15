@@ -52,10 +52,16 @@ function Login() {
             // The signed-in user info.
             const user = result.user;
             console.log(user);
-            if (user) {
+            if (user && user.email) {
                 //FIX: does not work!!!
-                if (await KapollerService.existsAccount(user.email)) {
-                    saveKapoller(user);
+                if (await KapollerService.existsAccount(user.email).then((response:any)=>response.data)) {
+                    console.log("in here")
+                    const id: any = await KapollerService.getUserByUsername(user.email).then(response => response.data.id)
+                    sessionStorage.setItem('userId', id)
+                    console.log(sessionStorage.getItem('userId'))
+                }
+                else {
+                    saveKapoller(user)
                 }
             }
             routeChange()
@@ -85,7 +91,7 @@ function Login() {
         };
 
         KapollerService.create(data)
-            .then((response: any) => {
+            .then(async (response: any) => {
                 response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
                 response.header("Access-Control-Allow-Origin", "*");
                 response.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
@@ -96,6 +102,9 @@ function Login() {
                     userName: response.data.userName
                 });
                 setSubmitted(true);
+                if (kapoller.userName) {
+                const id: any = await KapollerService.getUserByUsername(kapoller.userName).then(response => response.data.id)
+                sessionStorage.setItem('userId', id)}
                 console.log(response.data.id);
             })
             .catch((e: Error) => {
@@ -108,7 +117,7 @@ function Login() {
         <div>
             <h2 className="text-center mb-4">Welcome to Kapoll</h2>
             <div>
-                <button className={"w-100 myProfileButton"} onClick={logInGoogle} >Login with google</button>
+                <button className={"w-100 loginButton"} onClick={logInGoogle} >Login with google</button>
             </div>
         </div>
     );

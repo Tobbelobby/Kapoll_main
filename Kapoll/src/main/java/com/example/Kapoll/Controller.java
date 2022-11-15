@@ -12,11 +12,15 @@ import com.example.Kapoll.Kapoll_db.tables.Voters;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.json.Json;
-import java.net.URLDecoder;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -32,7 +36,11 @@ public class Controller {
     private PollDAO pollDAO = new PollDAO();
     private PollResDAO pollResDAO = new PollResDAO();
     private VoterDAO voterDAO = new VoterDAO();
-
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+    RestTemplate restTemplate = new RestTemplate();
     private final RabbitTemplate rabbitTemplate;
 
     public Controller(RabbitTemplate rabbitTemplate){
@@ -51,18 +59,25 @@ public class Controller {
     //////////////////////// KAPOLLER
 
     //FIX: encode/decode url
+    @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/api/Kapoller/check/{uName}")
     Boolean AccountExists(@ParameterObject @PathVariable String uName){
         return kapollerDAO.existsAccount(uName);
     }
 
+    @CrossOrigin(origins="http://localhost:3000")
+    @GetMapping("/api/Kapoller/username/{username}")
+    Kapoller getUserByUsername(@ParameterObject @PathVariable String username)  {
+        return GetKapoller(kapollerDAO.getKapollerIdByUsername(username));}
+
+    @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/api/Kapoller")
     List<Kapoller> GetAllKapollers() {
         return kapollerDAO.getAll();
     }
 
 
-
+    @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/api/Kapoller/{id}")
     Kapoller GetKapoller(@ParameterObject @PathVariable Long id) {
         if (kapollerDAO.exist(id)) {
@@ -71,7 +86,7 @@ public class Controller {
             throw new NotFoundException(id, "user");
         }
     }
-
+    @CrossOrigin(origins="http://localhost:3000")
     @PutMapping("/api/Kapoller/{id}")
     void updateKapoller(@ParameterObject @RequestBody Kapoller newKapoller, @PathVariable Long id) throws Exception {
         if (kapollerDAO.exist(id)) {
@@ -82,13 +97,13 @@ public class Controller {
         }
 
     }
-
+    @CrossOrigin(origins="http://localhost:3000")
     @PostMapping("/api/Kapoller")
     public void newKapoller(@ParameterObject @RequestBody Kapoller newKapoller) {
         kapollerDAO.addAndSave(newKapoller);
     }
 
-
+    @CrossOrigin(origins="http://localhost:3000")
     @DeleteMapping("/api/Kapoller/{id}")
     public void deleteKapoller(@ParameterObject @PathVariable Long id) {
         if (kapollerDAO.exist(id)) {
@@ -99,12 +114,13 @@ public class Controller {
 
     }
 
-    //////////////////////// POLL
+    @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/api/Poll")
     List<Poll> GetAllPolls() {
         return pollDAO.getAll();
     }
 
+    @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/api/Poll/{id}")
     Poll GetPoll(@ParameterObject @PathVariable Long id) {
         if (pollDAO.exist(id)) {
@@ -115,8 +131,9 @@ public class Controller {
     }
     @CrossOrigin(origins="http://localhost:3000")
     @PostMapping("/api/Poll")
-    void newPoll(@ParameterObject @RequestBody Poll newPoll) {
+    Poll newPoll(@ParameterObject @RequestBody Poll newPoll) {
         pollDAO.addAndSave(newPoll);
+        return newPoll;
 
     }
     @CrossOrigin(origins="http://localhost:3000")
@@ -125,14 +142,25 @@ public class Controller {
         if (pollDAO.exist(id)) {
             newPoll.setId(id);
             pollDAO.update(newPoll);
-            if(newPoll.getPoll_results() != null){
-                rabbitTemplate.convertAndSend( "","PollResults",newPoll);
-            }
-            //kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
+           // if(newPoll.getPoll_results() != null){
+             //   rabbitTemplate.convertAndSend( "","PollResults",newPoll);
+            //}
+            kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
         } else {
             throw new NotFoundException(id, "poll");
         }
     }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String createProducts(@RequestBody Set<Poll_result> poll_result) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<Set<Poll_result>>entity = new HttpEntity<Set<Poll_result>>(poll_result,headers);
+
+        return restTemplate.exchange(
+                "https://dweet.io/dweet/for/Kapoll-results", HttpMethod.POST, entity, String.class).getBody();
+    }
+
 
     @DeleteMapping("/api/Poll/{id}")
     public void deletePoll(@ParameterObject @PathVariable Long id) {
