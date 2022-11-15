@@ -12,11 +12,15 @@ import com.example.Kapoll.Kapoll_db.tables.Voters;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.json.Json;
-import java.net.URLDecoder;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -32,7 +36,11 @@ public class Controller {
     private PollDAO pollDAO = new PollDAO();
     private PollResDAO pollResDAO = new PollResDAO();
     private VoterDAO voterDAO = new VoterDAO();
-
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+    RestTemplate restTemplate = new RestTemplate();
     private final RabbitTemplate rabbitTemplate;
 
     public Controller(RabbitTemplate rabbitTemplate){
@@ -134,14 +142,25 @@ public class Controller {
         if (pollDAO.exist(id)) {
             newPoll.setId(id);
             pollDAO.update(newPoll);
-            if(newPoll.getPoll_results() != null){
-                rabbitTemplate.convertAndSend( "","PollResults",newPoll);
-            }
+           // if(newPoll.getPoll_results() != null){
+             //   rabbitTemplate.convertAndSend( "","PollResults",newPoll);
+            //}
             kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
         } else {
             throw new NotFoundException(id, "poll");
         }
     }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String createProducts(@RequestBody Set<Poll_result> poll_result) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<Set<Poll_result>>entity = new HttpEntity<Set<Poll_result>>(poll_result,headers);
+
+        return restTemplate.exchange(
+                "https://dweet.io/dweet/for/Kapoll-results", HttpMethod.POST, entity, String.class).getBody();
+    }
+
 
     @DeleteMapping("/api/Poll/{id}")
     public void deletePoll(@ParameterObject @PathVariable Long id) {

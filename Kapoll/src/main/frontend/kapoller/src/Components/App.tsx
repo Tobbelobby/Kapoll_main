@@ -2,7 +2,6 @@ import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
-
 import AddPoll from "./Poll/createPoll";
 import Poll from "./Poll/Poll";
 import PollsList from "./Poll/PollsList";
@@ -18,7 +17,7 @@ const App: React.FC = () => {
         <div className={'background'}>
 
             <nav className="navbar navbar-expand navbar-dark bg-dark">
-                <a href="/Poll" className="navbar-brand">
+                <a href={sessionStorage.getItem('userId') ? "/Poll" : "/login"} className="navbar-brand">
                     Kapoll!
                 </a>
                 <div className="navbar-nav mr-auto">
@@ -47,7 +46,7 @@ const App: React.FC = () => {
 
             <div className="flex space_around fill">
                 <Routes>
-                    <Route path={"/"} element={<PollsList/>}/>
+                    <Route path={"/"} element={<Login/>}/>
                     <Route path={"/Poll"} element={<PollsList/>}/>
                     <Route path={"/add"} element={<AddPoll/>}/>
                     <Route path={"/Poll/:id"} element={<Poll/>}/>

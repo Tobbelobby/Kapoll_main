@@ -4,7 +4,6 @@ export default interface PollResultData {
     id? : any | null,
     utilDate: Date,
     yesVote: number,
-    noVote: number,
-    pollId?: string,
+    noVote: number
 
 }

@@ -46,7 +46,7 @@ const PollOnline: React.FC<PollOnlineProps> = (props: PollOnlineProps) => {
             .catch((e: Error) => {
                 console.log(e)
             });
-        PostToDweet.sendResults(props)
+        //PostToDweet.sendResults(props)
 
         //navigate("/PollResult");
     }

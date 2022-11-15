@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {auth} from "../../firebase";
 import { useNavigate,BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -35,6 +35,7 @@ function UserProfile(){
     const LogOutWithGoogle = async () => {
         auth.signOut().then(() => {
             sessionStorage.removeItem('Auth Token')
+            sessionStorage.removeItem('userId')
             console.log("signed out OK")
             //const navigate = useNavigate();
             //navigate('/Signup')
