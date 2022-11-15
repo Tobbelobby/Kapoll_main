@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {auth} from "../../firebase";
-import { useNavigate,BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {useNavigate, BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
 import "../../App.css";
 import "../../styles/PollOnline.css"
@@ -9,7 +9,7 @@ import "../../styles/PollOnline.css"
 import pp from '../IMG/img_1.png';
 
 
-function UserProfile(){
+function UserProfile() {
     let navigate = useNavigate();
     useEffect(() => {
         let authToken = sessionStorage.getItem('Auth Token')
@@ -17,19 +17,17 @@ function UserProfile(){
         if (authToken) {
             console.log('navigating to profile')
             navigate('/myProfile')
-        }
-        else {
+        } else {
             console.log('navigating to login because authtoken is false')
             navigate('/login')
         }
-    },[])
+    }, [])
 
-    const routeChange = () =>{
+    const routeChange = () => {
         let path = `/`;
         navigate(path);
         console.log("to home")
     }
-
 
 
     const LogOutWithGoogle = async () => {
@@ -41,18 +39,19 @@ function UserProfile(){
             //navigate('/Signup')
             // Sign-out successful.
             routeChange();
-        }).catch((e:Error) => {
+        }).catch((e: Error) => {
             // An error happened.
             console.log(e);
         });
 
     }
 
-    return(
+    return (
         <div className="text-center mb-4">
             <h2 className="text-center mb-4">currentUser displayname</h2>
             <img className="text-center mb-4" id={"profilePicture"} src={pp} alt={"Profile-picture"} width="200px"/>
-            <button className={"w-100 text-center myProfileButton"} onClick={()=>navigate("/Poll")}>My Polls</button>
+            <button className={"w-100 text-center myProfileButton"} onClick={() => navigate("/Poll")}>My Polls
+            </button>
             <button className={"w-100 text-center myProfileButton"} onClick={LogOutWithGoogle}>Logout</button>
 
         </div>

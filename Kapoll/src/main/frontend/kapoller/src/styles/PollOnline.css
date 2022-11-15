@@ -104,7 +104,7 @@ button:hover {
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 .myProfileButton{
-    margin: 10px;
+    margin: 16px;
 }
 
 
@@ -114,8 +114,8 @@ button:hover {
     align-items: center;
     border-radius: 50px;
     background-color: #997272;
-    height: 10%;
-    transform: translateX(12%);
+    height: 40px;
+    transform: translateX(40%);
 }
 .myProfileButton{
     width: 50% !important;
