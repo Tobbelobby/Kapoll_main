@@ -76,7 +76,7 @@ const PollOnline: React.FC<PollOnlineProps> = (props: PollOnlineProps) => {
                             pollId: props.pollId,
                             pollQuestion: props.pollQuestion,
                             yesVotes: props.yesVotes + yes,
-                            noVotes: props.noVotes
+                            noVotes: props.noVotes + no
                         }
                     })
                 }}>SEND

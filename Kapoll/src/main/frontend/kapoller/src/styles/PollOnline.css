@@ -31,7 +31,10 @@
     line-height: 47px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     margin-top: 40px;
-
+}
+.pollResultQuestion {
+    margin: 40px 0 40px 0;
+    height: 14%;
 }
 .chartContainer{
     margin:auto;
