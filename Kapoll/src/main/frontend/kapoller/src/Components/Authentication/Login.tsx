@@ -117,7 +117,7 @@ function Login() {
         <div>
             <h2 className="text-center mb-4">Welcome to Kapoll</h2>
             <div>
-                <button className={"w-100 myProfileButton"} onClick={logInGoogle} >Login with google</button>
+                <button className={"w-100 loginButton"} onClick={logInGoogle} >Login with google</button>
             </div>
         </div>
     );
