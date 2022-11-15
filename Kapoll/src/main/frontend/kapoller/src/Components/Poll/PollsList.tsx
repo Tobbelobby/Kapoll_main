@@ -1,8 +1,9 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, {useState, useEffect, ChangeEvent} from "react";
 import PollService from "../../services/PollService";
 import PollData from "../../types/Poll";
 import {Link} from "react-router-dom";
 import KapollerService from "../../services/KapollerService";
+import '../../styles/ListOfPolls.css'
 
 const PollsList: React.FC = () => {
     const [polls, setPolls] = useState<Array<PollData>>([]);
@@ -15,17 +16,18 @@ const PollsList: React.FC = () => {
 
 
     const retrievePolls = () => {
-        let id: string |null = sessionStorage.getItem('userId')
+        let id: string | null = sessionStorage.getItem('userId')
         if (id) {
             KapollerService.get(id)
-            .then((response: any) => {
-                console.log(response)
-                setPolls(response.data.polls);
-                console.log(response.data.polls);
-            })
-            .catch((e: Error) => {
-                console.log(e);
-            });}
+                .then((response: any) => {
+                    console.log(response)
+                    setPolls(response.data.polls);
+                    console.log(response.data.polls);
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                });
+        }
     };
 
     const refreshList = () => {
@@ -51,18 +53,17 @@ const PollsList: React.FC = () => {
     };
 
 
-
     return (
-        <div className="list row">
-            <div className="col-md-6">
-                <h4>Poll List</h4>
+        <div className="flex list row max-width">
+            <div className="col-md-6 pollFont half-width">
+                <div className={'smallerHeaderFont'}>Your polls</div>
 
-                <ul className="list-group">
+                <ul className="list-group pollList pollFont">
                     {polls &&
                         polls.map((poll, index) => (
                             <li
                                 className={
-                                    "list-group-item " + (index === currentIndex ? "active" : "")
+                                    "list-group-item font pollListElement " + (index === currentIndex ? "active" : "")
                                 }
                                 onClick={() => setActivePoll(poll, index)}
                                 key={index}
@@ -72,23 +73,16 @@ const PollsList: React.FC = () => {
                         ))}
                 </ul>
 
-              {/*  <button
+                {/*  <button
                     className="m-3 btn btn-sm btn-danger"
                     onClick={removePoll}
                 >
                     Remove All
                 </button>*/}
             </div>
-            <div className="col-md-6">
+            <div>
                 {currentPoll ? (
-                    <div>
-                        <h4>Poll</h4>
-                        <div>
-                            <label>
-                                <strong>Title:</strong>
-                            </label>{" "}
-                            {currentPoll.title}
-                        </div>
+                    <div className="marginTop half-width font">
                         <div>
                             <label>
                                 <strong>Question:</strong>
@@ -101,19 +95,21 @@ const PollsList: React.FC = () => {
                             </label>{" "}
                             {currentPoll.time}
                         </div>
-
-                        <Link
-                            to={"/Poll/" + currentPoll.id}
-                            className="badge badge-warning"
-                        >
-                            Edit
-                        </Link>
-                        <button id={"copyLink"} onClick={() =>  navigator.clipboard.writeText('localhost:3000/'+currentPoll.id)}>Copy Link</button>
+                        <div className={'flex'}>
+                            <Link
+                                to={"/Poll/" + currentPoll.id}
+                                className="badge badge-warning copyLinkButton"
+                            >
+                                Edit
+                            </Link>
+                            <button className={'copyLinkButton'} id={"copyLink"}
+                                    onClick={() => navigator.clipboard.writeText('localhost:3000/' + currentPoll.id)}>Copy
+                                Link
+                            </button>
+                        </div>
                     </div>
                 ) : (
                     <div>
-                        <br />
-                        <p>Please click on a poll...</p>
                     </div>
                 )}
             </div>

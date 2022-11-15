@@ -16,7 +16,6 @@ function UserProfile() {
         console.log('auth token is')
         if (authToken) {
             console.log('navigating to profile')
-            navigate('/myProfile')
         } else {
             console.log('navigating to login because authtoken is false')
             navigate('/login')
@@ -47,12 +46,12 @@ function UserProfile() {
     }
 
     return (
-        <div className="text-center mb-4">
-            <h2 className="text-center mb-4">currentUser displayname</h2>
-            <img className="text-center mb-4" id={"profilePicture"} src={pp} alt={"Profile-picture"} width="200px"/>
-            <button className={"w-100 text-center myProfileButton"} onClick={() => navigate("/Poll")}>My Polls
+        <div className="flex flex-column centerJust alignJust text-center mb-4">
+            <h2 className="flex text-center mb-4">currentUser displayname</h2>
+            <img className="flex  " id={"profilePicture"} src={pp} alt={"Profile-picture"} width="200px"/>
+            <button className={"flex w-100 text-center myProfileButton"} onClick={() => navigate("/Poll")}>My Polls
             </button>
-            <button className={"w-100 text-center myProfileButton"} onClick={LogOutWithGoogle}>Logout</button>
+            <button className={"flex w-100 text-center myProfileButton"} onClick={LogOutWithGoogle}>Logout</button>
 
         </div>
     );

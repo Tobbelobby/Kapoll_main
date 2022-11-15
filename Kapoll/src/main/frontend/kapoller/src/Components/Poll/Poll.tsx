@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import PollService from "../../services/PollService";
 import PollData from "../../types/Poll";
+import "../../styles/ListOfPolls.css"
 
 const Poll: React.FC = () => {
     const { id }= useParams();
@@ -70,8 +71,8 @@ const Poll: React.FC = () => {
     return (
         <div>
             {currentPoll ? (
-                <div className="edit-form">
-                    <h4>Poll</h4>
+                <div className="edit-form font">
+                    <div className={'headerFont'}>Poll</div>
                     <form>
                         <div className="form-group">
                             <label htmlFor="title">Title</label>
@@ -85,7 +86,7 @@ const Poll: React.FC = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="question">question</label>
+                            <label htmlFor="question">Question</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -97,13 +98,13 @@ const Poll: React.FC = () => {
                         </div>
                         
                     </form>
-                    <button className="badge badge-danger mr-2" onClick={deletePoll}>
+                    <button className="smallPollFont badge red mr-2" onClick={deletePoll}>
                         Delete
                     </button>
 
                     <button
                         type="submit"
-                        className="badge badge-success"
+                        className="badge smallPollFont green"
                         onClick={updatePoll}
                     >
                         Update

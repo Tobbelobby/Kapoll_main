@@ -1,0 +1,70 @@
+.pollList{
+    width: 200px;
+
+}
+
+.pollListElement {
+    background-color: transparent;
+    overflow: auto;
+}
+
+.pollListElement.active {
+    background-color: #997272;
+    border-color: #997272;
+    display: block;
+}
+.green {
+    background-color: #ACC779;
+    height: 40px;
+}
+
+.red {
+    background-color: #DB6C79;
+    height: 40px;
+}
+
+.pollFont {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+}
+.smallPollFont {
+    font-style: italic;
+    font-weight: 600;
+    font-size: 15px;
+}
+.copyLinkButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    font-size: 13px;
+    background-color: #997272;
+    height: 40px;
+    border-radius: 50%;
+    color: black;
+    margin: 2px 10px 2px 10px;
+    padding: 3px;
+
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.marginTop {
+    margin-top: 50px
+}
+.max-width {
+    max-width: 100%;
+}
+
+.half-width {
+    width: 300px;
+}
+
+.headerFont {
+    font-size: 40px;
+    padding: 40px 0 10px 0;
+}
+.smallerHeaderFont {
+    font-size: 25px;
+    font-weight: 800;
+}

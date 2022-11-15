@@ -45,15 +45,12 @@ public class KapollerDAO extends MainImplementation{
                 updatedKapoller.setLastName(kapoller.getLastName());
             }
 
-            //if (kapoller.getPassword() != null) {
-            //    updatedKapoller.setPassword(kapoller.getPassword());
-            //}
 
             if (kapoller.getUserName() != null) {
                 updatedKapoller.setUserName(kapoller.getUserName());
             }
 
-            if (kapoller.getPolls() != null) {
+            if (kapoller.getPolls() != null && !(kapoller.getPolls().isEmpty())) {
                 pollDAO = new PollDAO();
                 for (Poll poll : kapoller.getPolls()) {
                     poll = pollDAO.update(pollDAO.get(poll.getId()));

@@ -114,10 +114,10 @@ function Login() {
 
 
     return (
-        <div>
-            <h2 className="text-center mb-4">Welcome to Kapoll</h2>
+        <div className={'flex flex-column centerJust'}>
+            <h2 className="flex text-center mb-4 font welcomeHeader">Welcome to Kapoll</h2>
             <div>
-                <button className={"w-100 loginButton"} onClick={logInGoogle} >Login with google</button>
+                <button className={"flex w-100 loginButton"} onClick={logInGoogle} >Login with google</button>
             </div>
         </div>
     );

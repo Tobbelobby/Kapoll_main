@@ -2,6 +2,8 @@ import React, {useState, ChangeEvent} from "react";
 import PollService from "../../services/PollService";
 import PollData from "../../types/Poll";
 import KapollerService from "../../services/KapollerService";
+import '../../styles/ListOfPolls.css'
+
 
 const AddPoll: React.FC = () => {
     const initialPoll = {
@@ -52,12 +54,12 @@ const AddPoll: React.FC = () => {
         setSubmitted(false)
     };
     return (
-        <div className="submit-form">
+        <div className="submit-form font">
             {submitted ? (
                 <div>
                     <h4>You submitted successfully!</h4>
                     <button className={'btn btn-success'} onClick={newPoll}>
-                        Add
+                        Add another poll
                     </button>
                 </div>
             ) : (
@@ -94,7 +96,7 @@ const AddPoll: React.FC = () => {
                             onChange={handleInputChange}
                             name="time"/>
                     </div>
-                    <button onClick={savePoll} className="btn btn-success">
+                    <button onClick={savePoll} className="btn green smallPollFont">
                         Submit
                     </button>
                 </div>

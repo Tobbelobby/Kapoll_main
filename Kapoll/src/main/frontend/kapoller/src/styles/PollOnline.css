@@ -53,7 +53,7 @@ button {
     /*border-radius:30%;
     height: 10vh;
     min-width: 14vh;*/
-    border-radius:50%;
+    border-radius: 50%;
     height: 12vh;
     min-width: 12vh;
     border-color: transparent;
@@ -64,6 +64,7 @@ button {
     backdrop-filter: blur(2px);
 
 }
+
 button:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
@@ -72,10 +73,12 @@ button:hover {
     background: #D9D9D9;
     border-color: transparent;
 }
+
 .yesButton {
     background: #ACC779;
     border: 1px solid #ACC779;
 }
+
 .noButton {
     background: #DB6C79;
     border: 1px solid #DB6C79;
@@ -85,6 +88,7 @@ button:hover {
     flex-direction: row;
     display: flex;
 }
+
 .timer {
     text-align: center;
     justify-content: center;
@@ -99,25 +103,42 @@ button:hover {
 .resultDisplayButton {
     width: 30px;
     height: 30px;
-    border-radius:50%;
+    border-radius: 50%;
     margin: 5px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
-.myProfileButton{
+
+.myProfileButton {
     margin: 16px;
 }
 
 
-.myProfileButton, #copyLink, .loginButton{
+.myProfileButton, .loginButton {
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50px;
     background-color: #997272;
-    height: 40px;
-    transform: translateX(40%);
+    height: 50px;
 }
-.myProfileButton{
+
+.loginButton {
+    transform: translateX(0%);
+}
+
+.myProfileButton {
     width: 50% !important;
 }
 
+.welcomeHeader {
+    font-size: 40px;
+    padding: 40px 0 10px 0;
+}
+
+.centerJust {
+    justify-content: center;
+}
+
+.alignJust  {
+    align-items: center;
+}

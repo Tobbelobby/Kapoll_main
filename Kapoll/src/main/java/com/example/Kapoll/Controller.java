@@ -163,9 +163,13 @@ public class Controller {
 
 
     @DeleteMapping("/api/Poll/{id}")
-    public void deletePoll(@ParameterObject @PathVariable Long id) {
+    public void deletePoll(@ParameterObject @PathVariable Long id) throws Exception {
         if (pollDAO.exist(id)) {
-            pollDAO.delete(pollDAO.get(id));
+            Poll poll = pollDAO.get(id);
+            Kapoller owner = kapollerDAO.get(pollDAO.getOwner(id));
+            pollDAO.delete(poll);
+            kapollerDAO.update(owner);
+
         } else {
             throw new NotFoundException(id, "poll");
         }
