@@ -142,9 +142,10 @@ public class Controller {
         if (pollDAO.exist(id)) {
             newPoll.setId(id);
             pollDAO.update(newPoll);
-           // if(newPoll.getPoll_results() != null){
-             //   rabbitTemplate.convertAndSend( "","PollResults",newPoll);
-            //}
+            if(newPoll.getPoll_results() != null){
+                rabbitTemplate.convertAndSend( "","PollResults",newPoll);
+                postResultToDweet((Json) newPoll.getPoll_results());
+            }
             kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
         } else {
             throw new NotFoundException(id, "poll");
@@ -199,9 +200,13 @@ public class Controller {
     }
 
     @CrossOrigin(origins ="https://dweet.io/dweet/for/Kapoll-results", methods = {POST})
-    @PostMapping("https://dweet.io/dweet/for/Kapoll-results")
-    void postResultToDweet(@ParameterObject @RequestBody Json data) {
-
+    @PostMapping("/api/dweet")
+    ResponseEntity<String> postResultToDweet(@ParameterObject @RequestBody Json data) {
+        String uri = "https://dweet.io/dweet/for/Kapoll-results";
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<Json> request = new HttpEntity<>(data);
+        ResponseEntity<String> response = restTemplate.postForEntity(uri, request, String.class);
+        return response;
     }
 
     @CrossOrigin(origins="http://localhost:3000")
