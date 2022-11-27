@@ -16,15 +16,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-
-import javax.json.Json;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 
@@ -147,7 +141,7 @@ public class Controller {
             newPoll.setId(id);
             pollDAO.update(newPoll);
             if(newPoll.getPoll_results() != null){
-                //rabbitTemplate.convertAndSend( "","PollResults",newPoll);
+                rabbitTemplate.convertAndSend( "","PollResults",newPoll);
                 ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
                 String json = ow.writeValueAsString(newPoll.getPoll_results());
                 int len = json.length();
@@ -197,8 +191,6 @@ public class Controller {
 
 
     }
-
-    //@CrossOrigin(origins ="https://dweet.io/dweet/for/Kapoll-results", methods = {POST})
     @PostMapping()
     ResponseEntity<String> postResultToDweet(@ParameterObject @RequestBody String data) {
         String uri = "https://dweet.io/dweet/for/Kapoll-results";
