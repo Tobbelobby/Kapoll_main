@@ -22,12 +22,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 
 /**
  *
  */
-@CrossOrigin(origins="http://localhost:3000", methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE, RequestMethod.OPTIONS})
+@CrossOrigin(origins="http://localhost:3000", methods = {RequestMethod.GET, POST,RequestMethod.PUT,RequestMethod.DELETE, RequestMethod.OPTIONS})
 @RestController
 public class Controller {
 
@@ -143,8 +147,12 @@ public class Controller {
             newPoll.setId(id);
             pollDAO.update(newPoll);
             if(newPoll.getPoll_results() != null){
-                rabbitTemplate.convertAndSend( "","PollResults",newPoll);
-                postResultToDweet((Json) newPoll.getPoll_results());
+                //rabbitTemplate.convertAndSend( "","PollResults",newPoll);
+                ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+                String json = ow.writeValueAsString(newPoll.getPoll_results());
+                int len = json.length();
+                String singleElement = json.substring(1, len-1);
+                postResultToDweet(singleElement);
             }
             kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
         } else {
@@ -152,15 +160,6 @@ public class Controller {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String createProducts(@RequestBody Set<Poll_result> poll_result) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<Set<Poll_result>>entity = new HttpEntity<Set<Poll_result>>(poll_result,headers);
-
-        return restTemplate.exchange(
-                "https://dweet.io/dweet/for/Kapoll-results", HttpMethod.POST, entity, String.class).getBody();
-    }
 
 
     @DeleteMapping("/api/Poll/{id}")
@@ -199,13 +198,16 @@ public class Controller {
 
     }
 
-    @CrossOrigin(origins ="https://dweet.io/dweet/for/Kapoll-results", methods = {POST})
-    @PostMapping("/api/dweet")
-    ResponseEntity<String> postResultToDweet(@ParameterObject @RequestBody Json data) {
+    //@CrossOrigin(origins ="https://dweet.io/dweet/for/Kapoll-results", methods = {POST})
+    @PostMapping()
+    ResponseEntity<String> postResultToDweet(@ParameterObject @RequestBody String data) {
         String uri = "https://dweet.io/dweet/for/Kapoll-results";
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<Json> request = new HttpEntity<>(data);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request = new HttpEntity<>(data, headers);
         ResponseEntity<String> response = restTemplate.postForEntity(uri, request, String.class);
+
         return response;
     }
 
