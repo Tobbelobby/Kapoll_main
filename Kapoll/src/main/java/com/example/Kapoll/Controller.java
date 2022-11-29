@@ -16,11 +16,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 
 /**
  *
@@ -31,7 +35,7 @@ public class Controller {
 
     @Autowired
     private KapollerDAO kapollerDAO = new KapollerDAO();
-    private PollDAO pollDAO = new PollDAO();
+    private  PollDAO pollDAO = new PollDAO();
     private PollResDAO pollResDAO = new PollResDAO();
     private VoterDAO voterDAO = new VoterDAO();
     @Bean
@@ -135,14 +139,16 @@ public class Controller {
     }
     @CrossOrigin(origins="http://localhost:3000")
     @PutMapping("/api/Poll/{id}")
-    void updatePoll(@ParameterObject @RequestBody Poll newPoll, @PathVariable Long id) throws Exception {
+    void updatePoll (@ParameterObject @RequestBody Poll newPoll, @PathVariable Long id) throws Exception {
         if (pollDAO.exist(id)) {
             newPoll.setId(id);
             pollDAO.update(newPoll);
-            if(newPoll.getPoll_results() != null){
-                //rabbitTemplate.convertAndSend( "","PollResults",newPoll);
-            }
             kapollerDAO.update(kapollerDAO.get(pollDAO.getOwner(id)));
+            List<Object> results = new ArrayList<>();
+            results.add(newPoll.getId());
+            results.add(newPoll.getPoll_results());// Poll result
+            results.add(pollDAO.get(pollDAO.getOwner(newPoll.getId()))); // Poll info
+            rabbitTemplate.convertAndSend( "","PollResults",results);
         } else {
             throw new NotFoundException(id, "poll");
         }

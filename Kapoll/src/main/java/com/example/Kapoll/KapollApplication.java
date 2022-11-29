@@ -1,10 +1,8 @@
 package com.example.Kapoll;
-import com.example.Kapoll.Configuration.RabbitConfig;
 import com.example.Kapoll.Kapoll_db.daoImplementation.KapollerDAO;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.persistence.Embeddable;
 
 @SpringBootApplication
 public class KapollApplication {
