@@ -11,3 +11,5 @@ services:
       - '5672:5672'
       # HTTP management UI
       - '15672:15672'
+
+# https://www.section.io/engineering-education/dockerize-a-rabbitmq-instance/ The code for the direct from this article

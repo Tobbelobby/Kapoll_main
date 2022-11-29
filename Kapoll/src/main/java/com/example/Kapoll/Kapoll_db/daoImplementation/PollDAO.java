@@ -18,7 +18,7 @@ public class PollDAO extends MainImplementation {
 
     public PollDAO() {}
     @Override
-    public Poll get(Long id) {
+    public synchronized Poll get(Long id) {
         return em.find(Poll.class, id);
     }
 
@@ -44,7 +44,7 @@ public class PollDAO extends MainImplementation {
         }
     }
 
-    public Long getOwner(Long pollId) {
+    public synchronized Long getOwner(Long pollId) {
         Query query = em.createQuery("SELECT e.owner.id FROM Poll e WHERE e.id = ?1 ").setParameter(1, pollId);
         List list = query.getResultList();
         Object id = list.get(0);
