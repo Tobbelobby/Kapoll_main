@@ -45,14 +45,6 @@ public class Controller {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public static boolean isNumeric(String str) {
-        return str != null && str.matches("[-+]?\\d*\\.?\\d+");
-    }
-
-    public static Long convertStringToLong(String toBeConverted) {
-        return Long.parseLong(toBeConverted);
-    }
-    //public Controller(){}
 
     //////////////////////// KAPOLLER
 
@@ -97,8 +89,9 @@ public class Controller {
     }
     @CrossOrigin(origins="http://localhost:3000")
     @PostMapping("/api/Kapoller")
-    public void newKapoller(@ParameterObject @RequestBody Kapoller newKapoller) {
+    public Kapoller newKapoller(@ParameterObject @RequestBody Kapoller newKapoller) {
         kapollerDAO.addAndSave(newKapoller);
+        return newKapoller;
     }
 
     @CrossOrigin(origins="http://localhost:3000")
@@ -129,8 +122,14 @@ public class Controller {
     }
     @CrossOrigin(origins="http://localhost:3000")
     @PostMapping("/api/Poll")
-    Poll newPoll(@ParameterObject @RequestBody Poll newPoll) {
+    Poll newPoll(@ParameterObject @RequestBody Poll newPoll) throws Exception {
         pollDAO.addAndSave(newPoll);
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(newPoll);
+        int len = json.length();
+        String concatenateJson = json.substring(0, len-1);
+        concatenateJson += String.format(", \"link\" : \"localhost:3000/%d\" }", newPoll.getId());
+        postResultToDweet(concatenateJson);
         return newPoll;
 
     }
@@ -141,14 +140,9 @@ public class Controller {
             newPoll.setId(id);
             pollDAO.update(newPoll);
             if(newPoll.getPoll_results() != null){
-                rabbitTemplate.convertAndSend( "","PollResults",newPoll);
-                ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-                String json = ow.writeValueAsString(newPoll.getPoll_results());
-                int len = json.length();
-                String singleElement = json.substring(1, len-1);
-                postResultToDweet(singleElement);
+                //rabbitTemplate.convertAndSend( "","PollResults",newPoll);
             }
-            kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
+            kapollerDAO.update(kapollerDAO.get(pollDAO.getOwner(id)));
         } else {
             throw new NotFoundException(id, "poll");
         }
@@ -231,7 +225,7 @@ public class Controller {
     }
 
     @GetMapping("/api/Voters/{id}")
-    Voters GetVote(@ParameterObject @PathVariable Long id) {
+    Voters getVote (@ParameterObject @PathVariable Long id) {
         if (voterDAO.exist(id)){
             return voterDAO.get(id);
         }else {

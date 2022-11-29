@@ -66,7 +66,7 @@ function UserProfile(){
         <div className="flex flex-column centerJust alignJust text-center mb-4">
             <h2 className="flex text-center mb-4">{displayName ? displayName : "Tobias Sagvaag Kristensen"}{kapoller.firstName} {kapoller.lastName}</h2>
             <img className="flex" id={"profilePicture"} src={pp} alt={"Profile-picture"} width="200px"/>
-            <button className={"flex w-100 text-center myProfileButton"} onClick={routeChange}>My Polls</button>
+            <button className={"flex w-100 text-center myProfileButton"} onClick={() => navigate('/Poll')}>My Polls</button>
             <button className={"flex w-100 text-center myProfileButton"} onClick={LogOutWithGoogle}>Logout</button>
         </div>
     );

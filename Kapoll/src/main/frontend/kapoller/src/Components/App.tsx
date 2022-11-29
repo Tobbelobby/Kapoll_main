@@ -36,11 +36,11 @@ const App: React.FC = () => {
                             My profile
                         </Link>
                     </li>
-                    <li className="nav-item">
+                    {!(sessionStorage.getItem('userId')) ? <li className="nav-item">
                         <Link to={"/login"} className="nav-link">
                             Login
                         </Link>
-                    </li>
+                    </li> : <></>}
                 </div>
             </nav>
 

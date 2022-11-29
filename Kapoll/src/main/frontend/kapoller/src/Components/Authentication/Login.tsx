@@ -96,25 +96,23 @@ function Login() {
         };
 
         KapollerService.create(data)
-            .then(async (response: any) => {
-                response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-                response.header("Access-Control-Allow-Origin", "*");
-                response.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
+            .then((response: any) => (response.json()).then(async(result:any) => {
                 setKapoller({
-                    id: response.data.id,
-                    firstName: response.data.firstName,
-                    lastName: response.data.lastName,
-                    userName: response.data.userName
+                    id: result.data.id,
+                    firstName: result.data.firstName,
+                    lastName: result.data.lastName,
+                    userName: result.data.userName
                 });
                 setSubmitted(true);
                 if (kapoller.userName) {
-                const id: any = await KapollerService.getUserByUsername(kapoller.userName).then(response => response.data.id)
+                const id: any = await KapollerService.getUserByUsername(kapoller.userName).then((response:any)=>response.json()).then((result) => (result.data.id))
+                console.log(id+ " user id in create");
                 sessionStorage.setItem('userId', id)}
-                console.log(response.data.id);
+
             })
             .catch((e: Error) => {
                 console.log(e)
-            });
+            }));
     };
 
 

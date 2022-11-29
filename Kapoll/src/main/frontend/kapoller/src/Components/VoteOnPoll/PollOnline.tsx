@@ -4,8 +4,6 @@ import Timer from "./Timer";
 import PollOnlineProps from "../../types/PollOnlineProps";
 import PollResultData from "../../types/PollResult";
 import PollService from "../../services/PollService";
-import PostToDweet from "./SendToDweet";
-import PollData from "../../types/Poll";
 import {useNavigate} from "react-router-dom";
 
 
