@@ -31,9 +31,9 @@ const AddPoll: React.FC = () => {
 
     const savePoll = () => {
         var data = {
-            title: poll.title,
-            question: poll.question,
-            time: poll.time
+            title: poll.title ? poll.title : "",
+            question: poll.question ? poll.question : "",
+            time: poll.time ? poll.time : 0
         };
 
         PollService.create(data)
