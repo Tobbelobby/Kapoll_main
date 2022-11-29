@@ -1,7 +1,7 @@
 import React, {useState, useEffect, ChangeEvent} from "react";
 import PollService from "../../services/PollService";
 import PollData from "../../types/Poll";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import KapollerService from "../../services/KapollerService";
 import '../../styles/ListOfPolls.css'
 
@@ -9,8 +9,14 @@ const PollsList: React.FC = () => {
     const [polls, setPolls] = useState<Array<PollData>>([]);
     const [currentPoll, setCurrentPoll] = useState<PollData | null>(null);
     const [currentIndex, setCurrentIndex] = useState<number>(-1);
+    let navigate = useNavigate();
 
     useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
+        if (!authToken) {
+            console.log('navigating to login because authtoken is false')
+            navigate('/login')
+        }
         retrievePolls();
     }, []);
 

@@ -1,8 +1,9 @@
-import React, {useState, ChangeEvent} from "react";
+import React, {useState, ChangeEvent, useEffect} from "react";
 import PollService from "../../services/PollService";
 import PollData from "../../types/Poll";
 import KapollerService from "../../services/KapollerService";
 import '../../styles/ListOfPolls.css'
+import {useNavigate} from "react-router-dom";
 
 
 const AddPoll: React.FC = () => {
@@ -15,7 +16,14 @@ const AddPoll: React.FC = () => {
     console.log('in create poll ' + userId)
     const [poll, setPoll] = useState<PollData>(initialPoll)
     const [submitted, setSubmitted] = useState<boolean>(false);
-
+    let navigate = useNavigate();
+    useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
+        if (!authToken) {
+            console.log('navigating to login because authtoken is false')
+            navigate('/login')
+        }
+    },[])
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
         setPoll({id:0,...poll, [name]: value});
