@@ -22,14 +22,15 @@ import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 
 /**
  *
  */
-@CrossOrigin(origins="http://localhost:3000", methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE, RequestMethod.OPTIONS})
+@CrossOrigin(origins="http://localhost:3000", methods = {RequestMethod.GET, POST,RequestMethod.PUT,RequestMethod.DELETE, RequestMethod.OPTIONS})
 @RestController
 public class Controller {
 
@@ -49,14 +50,6 @@ public class Controller {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public static boolean isNumeric(String str) {
-        return str != null && str.matches("[-+]?\\d*\\.?\\d+");
-    }
-
-    public static Long convertStringToLong(String toBeConverted) {
-        return Long.parseLong(toBeConverted);
-    }
-    //public Controller(){}
 
     //////////////////////// KAPOLLER
 
@@ -101,8 +94,9 @@ public class Controller {
     }
     @CrossOrigin(origins="http://localhost:3000")
     @PostMapping("/api/Kapoller")
-    public void newKapoller(@ParameterObject @RequestBody Kapoller newKapoller) {
+    public Kapoller newKapoller(@ParameterObject @RequestBody Kapoller newKapoller) {
         kapollerDAO.addAndSave(newKapoller);
+        return newKapoller;
     }
 
     @CrossOrigin(origins="http://localhost:3000")
@@ -133,8 +127,14 @@ public class Controller {
     }
     @CrossOrigin(origins="http://localhost:3000")
     @PostMapping("/api/Poll")
-    Poll newPoll(@ParameterObject @RequestBody Poll newPoll) {
+    Poll newPoll(@ParameterObject @RequestBody Poll newPoll) throws Exception {
         pollDAO.addAndSave(newPoll);
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(newPoll);
+        int len = json.length();
+        String concatenateJson = json.substring(0, len-1);
+        concatenateJson += String.format(", \"link\" : \"localhost:3000/%d\" }", newPoll.getId());
+        postResultToDweet(concatenateJson);
         return newPoll;
 
     }
@@ -144,7 +144,7 @@ public class Controller {
         if (pollDAO.exist(id)) {
             newPoll.setId(id);
             pollDAO.update(newPoll);
-            kapollerDAO.update(pollDAO.get(newPoll.getId()).getOwner());
+            kapollerDAO.update(kapollerDAO.get(pollDAO.getOwner(id)));
             List<Object> results = new ArrayList<>();
             results.add(newPoll.getId());
             results.add(newPoll.getPoll_results());// Poll result
@@ -155,15 +155,6 @@ public class Controller {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String createProducts(@RequestBody Set<Poll_result> poll_result) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<Set<Poll_result>>entity = new HttpEntity<Set<Poll_result>>(poll_result,headers);
-
-        return restTemplate.exchange(
-                "https://dweet.io/dweet/for/Kapoll-results", HttpMethod.POST, entity, String.class).getBody();
-    }
 
 
     @DeleteMapping("/api/Poll/{id}")
@@ -201,11 +192,16 @@ public class Controller {
 
 
     }
+    @PostMapping()
+    ResponseEntity<String> postResultToDweet(@ParameterObject @RequestBody String data) {
+        String uri = "https://dweet.io/dweet/for/Kapoll-results";
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request = new HttpEntity<>(data, headers);
+        ResponseEntity<String> response = restTemplate.postForEntity(uri, request, String.class);
 
-    @CrossOrigin(origins ="https://dweet.io/dweet/for/Kapoll-results", methods = {POST})
-    @PostMapping("https://dweet.io/dweet/for/Kapoll-results")
-    void postResultToDweet(@ParameterObject @RequestBody Json data) {
-
+        return response;
     }
 
     @CrossOrigin(origins="http://localhost:3000")
@@ -236,7 +232,7 @@ public class Controller {
     }
 
     @GetMapping("/api/Voters/{id}")
-    Voters GetVote(@ParameterObject @PathVariable Long id) {
+    Voters getVote (@ParameterObject @PathVariable Long id) {
         if (voterDAO.exist(id)){
             return voterDAO.get(id);
         }else {
