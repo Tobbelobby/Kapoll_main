@@ -20,7 +20,7 @@ const App: React.FC = () => {
                 <a href={sessionStorage.getItem('userId') ? "/Poll" : "/login"} className="navbar-brand">
                     Kapoll!
                 </a>
-                {!(sessionStorage.getItem('userId')) ? <div className="navbar-nav mr-auto">
+                {(sessionStorage.getItem('userId')!==null) ? <div className="navbar-nav mr-auto">
                     <li className="nav-item">
                         <Link to={"/Poll"} className="nav-link">
                             Polls
@@ -41,7 +41,11 @@ const App: React.FC = () => {
                             Login
                         </Link>
                     </li>
-                </div> : <></> }
+                </div> :<div className="navbar-nav mr-auto"> <li className="nav-item">
+                    <Link to={"/myProfile"} className="nav-link">
+                        My profile
+                    </Link>
+                </li> </div> }
             </nav>
 
             <div className="flex space_around fill">
