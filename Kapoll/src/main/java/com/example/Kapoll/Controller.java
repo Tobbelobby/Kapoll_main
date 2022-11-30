@@ -26,9 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-/**
- *
- */
+
 @CrossOrigin(origins="http://localhost:3000", methods = {RequestMethod.GET, POST,RequestMethod.PUT,RequestMethod.DELETE, RequestMethod.OPTIONS})
 @RestController
 public class Controller {
@@ -52,7 +50,6 @@ public class Controller {
 
     //////////////////////// KAPOLLER
 
-    //FIX: encode/decode url
     @CrossOrigin(origins="http://localhost:3000")
     @GetMapping("/api/Kapoller/check/{uName}")
     Boolean AccountExists(@ParameterObject @PathVariable String uName){
@@ -262,7 +259,5 @@ public class Controller {
             throw new NotFoundException(id, "voter");
         }
     }
-
-
 
 }

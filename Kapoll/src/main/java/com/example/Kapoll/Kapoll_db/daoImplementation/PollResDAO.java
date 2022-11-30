@@ -70,12 +70,5 @@ public class PollResDAO extends MainImplementation {
         catch (Exception ex){
             throw new Exception(ex.getMessage());
         }
-    /*public void update(Poll_result poll_result, ArrayList<Object> params) {
-        poll_result.setNoVote((Integer) params.get(0));
-        poll_result.setYesVote((Integer) params.get(0));
-        pollResList.add(poll_result);
-        save(poll_result);
-
-    }*/
 
 }}
