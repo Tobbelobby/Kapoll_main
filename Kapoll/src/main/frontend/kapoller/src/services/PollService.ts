@@ -33,7 +33,6 @@ const updateResults = async (id: string, data: Array<PollResultData>) => {
     const pollResults = {
         poll_results : data
     }
-    console.log(JSON.stringify(pollResults))
     return await fetch(`${url}/Poll/${id}`, {
         method: 'PUT',
         headers: {'Content-type': 'application/json', "Access-Control-Allow-Headers" : "Content-Type", 'Access-Control-Allow-Origin': '*', "Access-Control-Allow-Methods": "OPTIONS,POST, PUT,GET"},

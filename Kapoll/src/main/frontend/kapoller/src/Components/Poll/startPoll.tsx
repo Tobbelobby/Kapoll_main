@@ -42,7 +42,6 @@ const StartPoll: React.FC = () => {
             getPollData(id);
     }, [id]);
 
-    console.log('yes votes in start poll'+yesVotes)
     return <PollOnline pollId={id? id : ""} noVotes={noVotes} pollQuestion={question} timePublished={time} yesVotes={yesVotes}/>
 }
 
