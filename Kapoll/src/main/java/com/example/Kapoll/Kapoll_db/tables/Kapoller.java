@@ -17,6 +17,7 @@ public class Kapoller {
     private String lastName;
 
     private String userName;
+    //For further implementation
     //private String password;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
@@ -50,6 +51,7 @@ public class Kapoller {
         this.userName = userName;
     }
 
+    //For further implementation:
     //public String getPassword() {
     //    return password;
     //}

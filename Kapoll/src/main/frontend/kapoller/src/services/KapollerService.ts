@@ -1,7 +1,6 @@
 import http from "../http-common";
 import KapollerData from "../types/Kapoller";
 import PollData from "../types/Poll";
-import PollResultData from "../types/PollResult";
 
 const getAll = () => {
     return http.get<Array<KapollerData>>("/Kapoller")
@@ -36,8 +35,6 @@ const addPoll = async (id: string, data: Array<PollData>) => {
     const pollsToAdd = {
         polls : data
     }
-    console.log(id)
-    console.log(JSON.stringify(pollsToAdd))
     return await fetch(`${url}/Kapoller/${id}`, {
         method: 'PUT',
         headers: {'Content-type': 'application/json', "Access-Control-Allow-Headers" : "Content-Type", 'Access-Control-Allow-Origin': 'http://localhost:8080/', "Access-Control-Allow-Methods": "OPTIONS,POST, PUT,GET"},

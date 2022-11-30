@@ -1,22 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {BarChart,Bar,ResponsiveContainer}from'recharts';
-import PollOnlineProps from"../../types/PollOnlineProps";
-import PollResultData from"../../types/PollResult";
 import {useLocation, useParams} from "react-router-dom";
-import Poll from "./Poll";
-import PollResult from "../VoteOnPoll/PollResult";
 
 const green='#ACC779';
 const red='#DB6C79';
 
-/*
-const ResultCharts: (props: { yesVotes: number; noVotes: number }) => JSX.Element = (props: {yesVotes: number, noVotes: number}) => {
-    const {id} = useParams();
-    const d = {
-        pollId: id? id : '',
-        noVotes : props.noVotes,
-        yesVotes : props.yesVotes,
-    }*/
 const ResultCharts= () => {
     const location = useLocation();
     const {id} = useParams();
@@ -29,11 +17,11 @@ const ResultCharts= () => {
     }
     const data = [
         {name:"yes",
-        votes: parsedData.yesVotes,
-        fill:green,},
+            votes: parsedData.yesVotes,
+            fill:green,},
         {name:"no",
-        votes: parsedData.noVotes,
-        fill: red,},];
+            votes: parsedData.noVotes,
+            fill: red,},];
 
     return (
         <div className={"container"}>

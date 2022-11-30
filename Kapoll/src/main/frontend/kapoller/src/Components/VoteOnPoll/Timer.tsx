@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { useState } from 'react';
 import "../../styles/PollOnline.css"
 
-
+/*code derived from https://dev.to/yuridevat/how-to-create-a-timer-with-react-7b9 */
 const Timer = () => {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);

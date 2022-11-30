@@ -25,6 +25,7 @@ public class RabbitMongoListener {
         JSONArray poll = new JSONArray(pollResult);
         JSONObject pollInfo = poll.getJSONObject(2);
         JSONObject pollResults = poll.getJSONArray(1).getJSONObject(0);
+
         long pollId = poll.getLong(0);
         long userId = pollInfo.getInt("id");
         int yesVote = pollResults.getInt("yesVote");
@@ -33,6 +34,7 @@ public class RabbitMongoListener {
         String title = pollInfo.getString("title");
         String question = pollInfo.getString("question");
         int time = pollInfo.getInt("time");
+
         System.out.println(pollResults);
         mongoRepository.save(new PollResult(pollId,userId, yesVote, noVote, pollDate, title, question, time));
 

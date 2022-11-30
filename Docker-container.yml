@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.0"
 services:
   rabbitmq3:
     container_name: "rabbitmq"
@@ -8,8 +8,8 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
     ports:
       # AMQP protocol port
-      - '5672:5672'
+      - '5673:5673'
       # HTTP management UI
-      - '15672:15672'
+      - '15673:15673'
 
 # https://www.section.io/engineering-education/dockerize-a-rabbitmq-instance/ The code for the direct from this article

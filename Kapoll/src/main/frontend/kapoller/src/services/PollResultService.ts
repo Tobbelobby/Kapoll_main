@@ -1,7 +1,5 @@
 import PollResultData from "../types/PollResult";
 import http from "../http-common"
-import PollData from "../types/Poll";
-
 
 const getAll = async () => {
     return await http.get<Array<PollResultData>>("/PollResult");

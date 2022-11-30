@@ -13,14 +13,13 @@ const AddPoll: React.FC = () => {
         time: 0
     };
     let userId: string | null = sessionStorage.getItem('userId')
-    console.log('in create poll ' + userId)
     const [poll, setPoll] = useState<PollData>(initialPoll)
     const [submitted, setSubmitted] = useState<boolean>(false);
     let navigate = useNavigate();
     useEffect(() => {
         let authToken = sessionStorage.getItem('Auth Token')
         if (!authToken) {
-            console.log('navigating to login because authtoken is false')
+            //navigating to login because authtoken is false
             navigate('/login')
         }
     },[])
@@ -37,20 +36,17 @@ const AddPoll: React.FC = () => {
         };
 
         PollService.create(data)
-            .then(async(response) => {
+            .then((response) => {
                 setSubmitted(true);
                 return response.json().then((result) => {
-                    console.log(result.id)
-                    console.log(poll)
                     var newData:PollData = {
                         id: result.id,
                         title: poll.title,
                         question: poll.question,
                         time: poll.time}
                     if(userId){KapollerService.addPoll(userId, [newData])
-                        .then((response) => {console.log(response.headers)})
-                        .catch((e: Error) => console.log(e));
-                        setSubmitted(true);}
+                        .then((response) => {setSubmitted(true)})
+                        .catch((e: Error) => console.log(e));}
                 })
             })
             .catch((e: Error) => {
@@ -81,7 +77,7 @@ const AddPoll: React.FC = () => {
                                value={poll.title}
                                onChange={handleInputChange}
                                name={"title"}
-                                defaultValue={""}/>
+                        />
 
                     </div>
                     <div className="form-group">
@@ -94,7 +90,7 @@ const AddPoll: React.FC = () => {
                             value={poll.question}
                             onChange={handleInputChange}
                             name="question"
-                            defaultValue={""}/>
+                        />
                     </div>
                     <div className="form-group">
                         <label htmlFor="time ">Time in seconds</label>
@@ -106,7 +102,7 @@ const AddPoll: React.FC = () => {
                             value={poll.time}
                             onChange={handleInputChange}
                             name="time"
-                        defaultValue={0}/>
+                        />
                     </div>
                     <button onClick={savePoll} className="btn green smallPollFont">
                         Submit

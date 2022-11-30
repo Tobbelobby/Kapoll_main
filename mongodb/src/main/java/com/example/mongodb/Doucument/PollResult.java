@@ -11,6 +11,7 @@ public class PollResult {
 
     @Id
     String id;
+
     private Long pollId;
     private Long userID;
     private int yesVotes;
