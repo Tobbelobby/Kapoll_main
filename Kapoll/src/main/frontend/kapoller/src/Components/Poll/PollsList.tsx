@@ -14,7 +14,7 @@ const PollsList: React.FC = () => {
     useEffect(() => {
         let authToken = sessionStorage.getItem('Auth Token')
         if (!authToken) {
-            console.log('navigating to login because authtoken is false')
+            //navigating to login because authtoken is false
             navigate('/login')
         }
         retrievePolls();
@@ -26,9 +26,7 @@ const PollsList: React.FC = () => {
         if (id) {
             KapollerService.get(id)
                 .then((response: any) => {
-                    console.log(response)
                     setPolls(response.data.polls);
-                    console.log(response.data.polls);
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -46,7 +44,8 @@ const PollsList: React.FC = () => {
         setCurrentPoll(poll);
         setCurrentIndex(index);
     };
-
+    {/*
+    //For futher implementation
     const removePoll = (id: string) => {
         PollService.remove(id)
             .then((response: any) => {
@@ -57,6 +56,7 @@ const PollsList: React.FC = () => {
                 console.log(e);
             });
     };
+    */}
 
 
     return (
@@ -69,11 +69,9 @@ const PollsList: React.FC = () => {
                         polls.map((poll, index) => (
                             <li
                                 className={
-                                    "list-group-item font pollListElement " + (index === currentIndex ? "active" : "")
-                                }
+                                    "list-group-item font pollListElement " + (index === currentIndex ? "active" : "")}
                                 onClick={() => setActivePoll(poll, index)}
-                                key={index}
-                            >
+                                key={index}>
                                 {poll.title}
                             </li>
                         ))}
@@ -85,6 +83,7 @@ const PollsList: React.FC = () => {
                 >
                     Remove All
                 </button>*/}
+
             </div>
             <div>
                 {currentPoll ? (
