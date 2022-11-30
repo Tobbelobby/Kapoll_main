@@ -35,8 +35,6 @@ const addPoll = async (id: string, data: Array<PollData>) => {
     const pollsToAdd = {
         polls : data
     }
-    console.log(id)
-    console.log(JSON.stringify(pollsToAdd))
     return await fetch(`${url}/Kapoller/${id}`, {
         method: 'PUT',
         headers: {'Content-type': 'application/json', "Access-Control-Allow-Headers" : "Content-Type", 'Access-Control-Allow-Origin': 'http://localhost:8080/', "Access-Control-Allow-Methods": "OPTIONS,POST, PUT,GET"},

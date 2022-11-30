@@ -77,7 +77,7 @@ const AddPoll: React.FC = () => {
                                value={poll.title}
                                onChange={handleInputChange}
                                name={"title"}
-                                defaultValue={""}/>
+                        />
 
                     </div>
                     <div className="form-group">
@@ -90,7 +90,7 @@ const AddPoll: React.FC = () => {
                             value={poll.question}
                             onChange={handleInputChange}
                             name="question"
-                            defaultValue={""}/>
+                        />
                     </div>
                     <div className="form-group">
                         <label htmlFor="time ">Time in seconds</label>
@@ -102,7 +102,7 @@ const AddPoll: React.FC = () => {
                             value={poll.time}
                             onChange={handleInputChange}
                             name="time"
-                        defaultValue={0}/>
+                        />
                     </div>
                     <button onClick={savePoll} className="btn green smallPollFont">
                         Submit

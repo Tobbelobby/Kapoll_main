@@ -14,7 +14,6 @@ const axCreate = async (data: PollData) => {
 }
 const url = "http://localhost:8080/api"
 const create = async (data: PollData) => {
-    console.log('he')
     return await fetch(`${url}/Poll`, {
         method: "POST",
         headers: {'Content-type': 'application/json', "Access-Control-Allow-Headers" : "Content-Type", 'Access-Control-Allow-Origin': '*', "Access-Control-Allow-Methods": "OPTIONS,POST, PUT,GET"},
