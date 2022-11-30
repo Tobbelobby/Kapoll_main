@@ -36,7 +36,7 @@ const AddPoll: React.FC = () => {
         };
 
         PollService.create(data)
-            .then(async(response) => {
+            .then((response) => {
                 setSubmitted(true);
                 return response.json().then((result) => {
                     var newData:PollData = {
@@ -45,9 +45,8 @@ const AddPoll: React.FC = () => {
                         question: poll.question,
                         time: poll.time}
                     if(userId){KapollerService.addPoll(userId, [newData])
-                        .then((response) => {console.log(response.headers)})
-                        .catch((e: Error) => console.log(e));
-                        setSubmitted(true);}
+                        .then((response) => {setSubmitted(true)})
+                        .catch((e: Error) => console.log(e));}
                 })
             })
             .catch((e: Error) => {
