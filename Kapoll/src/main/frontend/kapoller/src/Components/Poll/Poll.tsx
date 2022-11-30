@@ -23,7 +23,6 @@ const Poll: React.FC = () => {
         PollService.get(id)
             .then((response: any) => {
                 setCurrentPoll(response.data);
-                console.log(response.data);
             })
             .catch((e: Error) => {
                 console.log(e);
@@ -48,11 +47,9 @@ const Poll: React.FC = () => {
                 response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
                 response.header("Access-Control-Allow-Origin", "*");
                 response.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
-                console.log(response.data);
                 setMessage("The Poll was updated successfully!");
             })
             .catch((e: Error) => {
-                console.log('heiii')
                 console.log(e);
             });
     };
@@ -60,7 +57,6 @@ const Poll: React.FC = () => {
     const deletePoll = () => {
         PollService.remove(currentPoll.id)
             .then((response: any) => {
-                console.log(response.data);
                 navigate("/Poll");
             })
             .catch((e: Error) => {
@@ -96,7 +92,7 @@ const Poll: React.FC = () => {
                                 onChange={handleInputChange}
                             />
                         </div>
-                        
+
                     </form>
                     <button className="smallPollFont badge red mr-2" onClick={deletePoll}>
                         Delete

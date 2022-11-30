@@ -8,7 +8,6 @@ import {useNavigate} from "react-router-dom";
 
 
 const PollOnline: React.FC<PollOnlineProps> = (props: PollOnlineProps) => {
-    console.log(props.yesVotes)
     let navigate = useNavigate();
     const [yes, setYes] = useState<number>(0)
     const [no, setNo] = useState<number>(0)

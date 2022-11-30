@@ -13,14 +13,13 @@ const AddPoll: React.FC = () => {
         time: 0
     };
     let userId: string | null = sessionStorage.getItem('userId')
-    console.log('in create poll ' + userId)
     const [poll, setPoll] = useState<PollData>(initialPoll)
     const [submitted, setSubmitted] = useState<boolean>(false);
     let navigate = useNavigate();
     useEffect(() => {
         let authToken = sessionStorage.getItem('Auth Token')
         if (!authToken) {
-            console.log('navigating to login because authtoken is false')
+            //navigating to login because authtoken is false
             navigate('/login')
         }
     },[])
@@ -31,7 +30,7 @@ const AddPoll: React.FC = () => {
 
     const savePoll = () => {
         var data = {
-            title: poll.title ? poll.title : "emtpy",
+            title: poll.title ? poll.title : "empty",
             question: poll.question ? poll.question : "empty",
             time: poll.time ? poll.time : 0
         };
@@ -40,8 +39,6 @@ const AddPoll: React.FC = () => {
             .then(async(response) => {
                 setSubmitted(true);
                 return response.json().then((result) => {
-                    console.log(result.id)
-                    console.log(poll)
                     var newData:PollData = {
                         id: result.id,
                         title: poll.title,

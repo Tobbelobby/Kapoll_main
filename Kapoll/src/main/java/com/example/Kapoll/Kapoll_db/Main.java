@@ -28,7 +28,6 @@ public class Main {
         user1.setFirstName("Winnie");
         user1.setLastName("The Pooh");
         user1.setUserName("The mighty bear");
-        //user1.setPassword("Honey123");
 
         Poll poll = new Poll();
         poll.setQuestion("Is honey good?");
@@ -46,8 +45,6 @@ public class Main {
         Set<Poll_result> pollResultSet = new HashSet<>();
         pollResultSet.add(poll_result);
         poll.setPoll_results(pollResultSet);
-
-
 
         em.persist(user1);
         em.persist(poll);

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate} from "react-router-dom";
 import "../../App.css";
 import "../../styles/PollOnline.css"
@@ -6,45 +6,23 @@ import "../../styles/PollOnline.css"
 import firebase from "firebase/compat/app";
 import KapollerService from "../../services/KapollerService";
 import KapollerData from "../../types/Kapoller";
-import PollOnline from "../VoteOnPoll/PollOnline";
+import {auth} from "../firebase";
 
 function Login() {
     let navigate = useNavigate();
     useEffect(() => {
         let authToken = sessionStorage.getItem('Auth Token')
-        console.log('auth token is')
-        console.log(authToken);
         if (authToken) {
-
-            console.log('navigating to profile because user is already logged in')
+            //navigating to profile because user is already logged in
             navigate('/myProfile')
-        }
-        else {
-            console.log('navigating to login because authtoken is false')
-            navigate('/login')
         }
     },[])
 
-    const config = {
-        apiKey: "AIzaSyCjRtqoXz1m2_xjwI6tz5dVBTTBmTMoZSQ",
-        authDomain: "kapoller-77076.firebaseapp.com",
-        projectId: "kapoller-77076",
-        storageBucket: "kapoller-77076.appspot.com",
-        messagingSenderId: "261824646701",
-        appId: "1:261824646701:web:90aa767667cba1979d32a4"
-    };
-
-    firebase.initializeApp(config);
-    const auth = firebase.auth();
 
     const provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('profile');
     provider.addScope('email');
 
-    const routeChange = () =>{
-        let path = `/myProfile`;
-        //navigate(`/myProfile`, {state:{firstName:user.firstName,name:'sabaoon'}});
-    }
     const username = "";
     const logInGoogle = () =>{
         auth.signInWithPopup(provider).then(async function (result) {
@@ -55,20 +33,19 @@ function Login() {
 
             // The signed-in user info.
             const user = result.user;
+
             //nonlocal username
-            console.log(user);
             if (user && user.email) {
+                sessionStorage.setItem('Username', user.displayName?user.displayName:"")
+
                 if (await KapollerService.existsAccount(user.email).then((response:any)=>response.data)) {
-                    console.log("in here")
                     const id: any = await KapollerService.getUserByUsername(user.email).then(response => response.data.id)
                     sessionStorage.setItem('userId', id)
-                    console.log(sessionStorage.getItem('userId'))
                 }
                 else {
                     saveKapoller(user)
                 }
             }
-            //navigate(`/myProfile`, {state:{userObj:user?.displayName}});
             navigate(`/myProfile`);
         });
     }
@@ -82,13 +59,9 @@ function Login() {
     const [kapoller, setKapoller] = useState<KapollerData>(initialKapoller)
     const [submitted, setSubmitted] = useState<boolean>(false);
 
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = event.target;
-        setKapoller({...kapoller, [name]: value});
-    };
-
+    //When saving firstName and lastName, we use the first and second word that google return as displayname,
+    // but this should be improved because there are cases when a person have middel names
     const saveKapoller = (user: firebase.User) => {
-        console.log("save kapoller()");
         var data:KapollerData = {
             firstName: user.displayName?.split(" ")[0],
             lastName: user.displayName?.split(" ")[1],
@@ -105,14 +78,14 @@ function Login() {
                 });
                 setSubmitted(true);
                 if (kapoller.userName) {
-                const id: any = await KapollerService.getUserByUsername(kapoller.userName).then((response:any)=>response.json()).then((result) => (result.data.id))
-                console.log(id+ " user id in create");
-                sessionStorage.setItem('userId', id)}
-
+                    const id: any = await KapollerService.getUserByUsername(kapoller.userName).then((response:any)=>
+                        response.json()).then((result) =>
+                        (result.data.id))
+                    sessionStorage.setItem('userId', id)}
             })
-            .catch((e: Error) => {
-                console.log(e)
-            }));
+                .catch((e: Error) => {
+                    console.log(e)
+                }));
     };
 
 
