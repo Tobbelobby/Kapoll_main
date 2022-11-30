@@ -2,6 +2,7 @@ package com.example.Kapoll.Kapoll_db.daoImplementation;
 
 import com.example.Kapoll.Kapoll_db.tables.Poll;
 import com.example.Kapoll.Kapoll_db.tables.Poll_result;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,9 @@ public class PollDAO extends MainImplementation {
         super(entityManagerFactory, em);
     }
 
-    public PollDAO() {}
+    public PollDAO() {
+    }
+
     @Override
     public synchronized Poll get(Long id) {
         return em.find(Poll.class, id);
@@ -38,8 +41,7 @@ public class PollDAO extends MainImplementation {
     public boolean exist(Long id) {
         if (!(get(id) == (null))) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -48,7 +50,7 @@ public class PollDAO extends MainImplementation {
         Query query = em.createQuery("SELECT e.owner.id FROM Poll e WHERE e.id = ?1 ").setParameter(1, pollId);
         List list = query.getResultList();
         Object id = list.get(0);
-        Long kapollerId = (Long)(id);
+        Long kapollerId = (Long) (id);
         return kapollerId;
     }
 
@@ -75,7 +77,7 @@ public class PollDAO extends MainImplementation {
                 updatedPoll.setTime(poll.getTime());
             }
 
-            if (poll.getPoll_results() != null){
+            if (poll.getPoll_results() != null) {
                 for (Poll_result poll_result : poll.getPoll_results()) {
                     updatedPoll.addToResults(poll_result);
                 }
@@ -87,9 +89,9 @@ public class PollDAO extends MainImplementation {
             save(updatedPoll);
             return updatedPoll;
 
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
 
-}}
+    }
+}

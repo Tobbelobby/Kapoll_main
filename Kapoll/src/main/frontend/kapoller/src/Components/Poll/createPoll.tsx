@@ -31,8 +31,8 @@ const AddPoll: React.FC = () => {
 
     const savePoll = () => {
         var data = {
-            title: poll.title ? poll.title : "",
-            question: poll.question ? poll.question : "",
+            title: poll.title ? poll.title : "emtpy",
+            question: poll.question ? poll.question : "empty",
             time: poll.time ? poll.time : 0
         };
 
