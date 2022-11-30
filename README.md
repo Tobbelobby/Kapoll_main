@@ -16,7 +16,7 @@ git clone https://github.com/Tobbelobby/Kapoll_main.git
 We have to install some packages for the front-end.
 
 ```
-cd Kapoll_main/Kapoll/src/main/frontend/kapoller/ |  npm init 
+cd Kapoll_main/Kapoll/src/main/frontend/kapoller/ |  npm install
 ```
 
 Start by running the docker container either bye using the IDEA or with the command:
