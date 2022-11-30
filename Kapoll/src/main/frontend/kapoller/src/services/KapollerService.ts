@@ -1,7 +1,6 @@
 import http from "../http-common";
 import KapollerData from "../types/Kapoller";
 import PollData from "../types/Poll";
-import PollResultData from "../types/PollResult";
 
 const getAll = () => {
     return http.get<Array<KapollerData>>("/Kapoller")

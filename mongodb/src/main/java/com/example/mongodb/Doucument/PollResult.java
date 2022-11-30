@@ -23,10 +23,6 @@ public class PollResult {
 
 
 
-
-    public PollResult(){}
-
-
     public PollResult(Long pollId, Long userID, int yesVotes, int noVotes, Long pollDate, String title, String question, int time){
         this.pollId = pollId;
         this.userID = userID;
@@ -51,7 +47,5 @@ public class PollResult {
                 ", time=" + time +
                 '}';
     }
-
-
 
 }
