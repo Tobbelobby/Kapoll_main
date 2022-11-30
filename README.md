@@ -1,7 +1,7 @@
 # Kapoll a Voting Application
 
 This project was done as a semester project in the cors DAT250 at Western Norway University of Applied Sciences.
-From here we aspect you to have Java, Maven, Node.js, npm and Docker preinstalled. 
+From here we expect you to have Java, Maven, Node.js, npm and Docker preinstalled. 
 The walk-through assume that you use a IDEA, that support some type of automatic build, 
 the command for this is not given her
 
