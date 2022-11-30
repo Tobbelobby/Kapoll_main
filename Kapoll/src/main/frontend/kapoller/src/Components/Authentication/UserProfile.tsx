@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import {auth} from "../../firebase";
-import {useNavigate, useLocation, useParams} from "react-router-dom";
+import {auth} from "../firebase";
+import {useNavigate, useLocation} from "react-router-dom";
 
 import "../../App.css";
 import "../../styles/PollOnline.css"
@@ -48,15 +48,12 @@ function UserProfile(){
             // An error happened.
             console.log(e);
         });
-
     }
-
-
 
     return(
         <div className="flex flex-column centerJust alignJust text-center mb-4">
-            <h2 className="flex text-center mb-4">{displayName ? displayName : "Welcome!"}{kapoller.firstName} {kapoller.lastName}</h2>
-            <h2 className="flex text-center mb-4">{username ? username : "Welcome!"}</h2>
+            <h2 className="flex text-center mb-4">{displayName ? displayName : "Welcome!"}</h2>
+            <h2 className="flex text-center mb-4">{username ? username : ""}</h2>
             <img className="flex" id={"profilePicture"} src={profilePic} alt={"Profile-picture"} width="200px"/>
             <button className={"flex w-100 text-center myProfileButton"} onClick={() => navigate('/Poll')}>My Polls</button>
             <button className={"flex w-100 text-center myProfileButton"} onClick={LogOutWithGoogle}>Logout</button>

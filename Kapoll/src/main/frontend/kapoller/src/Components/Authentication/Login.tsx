@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate} from "react-router-dom";
 import "../../App.css";
 import "../../styles/PollOnline.css"
@@ -6,7 +6,7 @@ import "../../styles/PollOnline.css"
 import firebase from "firebase/compat/app";
 import KapollerService from "../../services/KapollerService";
 import KapollerData from "../../types/Kapoller";
-import {auth} from "../../firebase";
+import {auth} from "../firebase";
 
 function Login() {
     let navigate = useNavigate();
@@ -34,8 +34,6 @@ function Login() {
             // The signed-in user info.
             const user = result.user;
 
-
-
             //nonlocal username
             if (user && user.email) {
                 sessionStorage.setItem('Username', user.displayName?user.displayName:"")
@@ -48,7 +46,6 @@ function Login() {
                     saveKapoller(user)
                 }
             }
-            //navigate(`/myProfile`, {state:{userObj:user?.displayName}});
             navigate(`/myProfile`);
         });
     }

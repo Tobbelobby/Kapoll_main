@@ -5,12 +5,10 @@ import "../App.css";
 import AddPoll from "./Poll/createPoll";
 import Poll from "./Poll/Poll";
 import PollsList from "./Poll/PollsList";
-import PollOnline from "./VoteOnPoll/PollOnline"
 import StartPoll from "./Poll/startPoll";
 import Login from "./Authentication/Login";
 import UserProfile from "./Authentication/UserProfile";
 import ResultChart from "./Poll/ResultChart";
-import PollResult from "./VoteOnPoll/PollResult";
 
 const App: React.FC = () => {
     return (
@@ -31,16 +29,13 @@ const App: React.FC = () => {
                             Add a poll
                         </Link>
                     </li>
-                    <li className="nav-item">
-                        <Link to={"/myProfile"} className="nav-link">
-                            My profile
-                        </Link>
-                    </li>
-                    {!(sessionStorage.getItem('userId')) ? <li className="nav-item">
+                    {(sessionStorage.getItem('userId') === null) ? <li className="nav-item">
                         <Link to={"/login"} className="nav-link">
                             Login
                         </Link>
-                    </li> : <></>}
+                    </li> : <Link to={"/myProfile"} className="nav-link">
+                        My profile
+                    </Link>}
                 </div>
             </nav>
 
