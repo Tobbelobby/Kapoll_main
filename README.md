@@ -21,13 +21,7 @@ cd Kapoll_main/Kapoll/src/main/frontend/kapoller/
 ```
 npm install
 ```
-
-Start by running the docker container either bye using the IDEA or with the command:
-
-```
-docker run hello-world &
-```
-
+Start by running the docker container either bye using the IDEA or with by the CLI. 
 We are now ready to start the back-end, in the IDEA run KapollApplication and MongodbApplication.
 The last thing is to start the front-end, move to /Kapoll_main/Kapoll/src/main/frontend/kapoller, and run this command:
 
