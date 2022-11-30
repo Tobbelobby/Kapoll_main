@@ -30,7 +30,8 @@ npm start
 ```
 
 
-
+Start with trying to log in with google. If successful, you unfortunately have to log out and then log back in
+in order to add a poll, as explained in section 4.8 and 5 in the report. 
 
 
 
